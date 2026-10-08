@@ -1,0 +1,33 @@
+{
+  "app_name": "Undangan Digital Bali - Lira & Febi",
+  "theme": "Luxurious Balinese Royal Wedding (Red, Gold & Obsidian Black)",
+  "typography": {
+    "heading_font": "Cormorant Garamond, serif",
+    "body_font": "Plus Jakarta Sans, sans-serif"
+  },
+  "colors": {
+    "primary": "#B8860B",
+    "secondary": "#8B0000",
+    "background": "#0F0E0E",
+    "card_bg": "#1A1818",
+    "text_main": "#F5F2EB",
+    "text_muted": "#C2BDB2",
+    "accent_gold": "#D4AF37",
+    "accent_red": "#990000"
+  },
+  "image_urls": {
+    "hero_couple": "https://images.unsplash.com/photo-1625759770934-d442a6a395f1?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjY2NzV8MHwxfHNlYXJjaHwzfHxiYWxpbmVzZSUyMHRyYWRpdGlvbmFsJTIwY291cGxlJTIwd2VkZGluZyUyMHJlZCUyMGdvbGQlMjBibGFja3xlbnwwfHx8fDE3OTE0NTYxODd8MA&ixlib=rb-4.1.0&q=85",
+    "gallery_1": "https://images.unsplash.com/photo-1692716061763-d53fc6a6cef5?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjY2NzV8MHwxfHNlYXJjaHw0fHxiYWxpbmVzZSUyMHRyYWRpdGlvbmFsJTIwY291cGxlJTIwd2VkZGluZyUyMHJlZCUyMGdvbGQlMjBibGFja3xlbnwwfHx8fDE3OTE0NTYxODd8MA&ixlib=rb-4.1.0&q=85",
+    "gallery_2": "https://images.unsplash.com/photo-1709140005809-5db5cf569edf?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjY2NzV8MHwxfHNlYXJjaHwxfHxiYWxpbmVzZSUyMHRyYWRpdGlvbmFsJTIwY291cGxlJTIwd2VkZGluZyUyMHJlZCUyMGdvbGQlMjBibGFja3xlbnwwfHx8fDE3OTE0NTYxODd8MA&ixlib=rb-4.1.0&q=85",
+    "gallery_3": "https://images.unsplash.com/photo-1709140005809-6b1e0d4e9d1d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjY2NzV8MHwxfHNlYXJjaHwyfHxiYWxpbmVzZSUyMHRyYWRpdGlvbmFsJTIwY291cGxlJTIwd2VkZGluZyUyMHJlZCUyMGdvbGQlMjBibGFja3xlbnwwfHx8fDE3OTE0_W9h&ixlib=rb-4.1.0&q=85",
+    "temple_decor": "https://images.unsplash.com/photo-1767502597098-6bbefa312095?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDJ8MHwxfHNlYXJjaHwyfHxiYWxpbmVzZSUyMHRlbXBsZSUyMHRyYWRpdGlvbmFsJTIwd2VkZGluZyUyMGRlY29yYXRpb24lMjBmbG93ZXJ8ZW58MHx8fHwxNzkxNDU2MTg3fDA&ixlib=rb-4.1.0&q=85",
+    "frangipani": "https://images.unsplash.com/photo-1698146082209-114c235733c9?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNDR8MHwxfHNlYXJjaHwxfHxiYWxpbmVzZSUyMGZyYW5naXBhbmklMjBmbG93ZXIlMjB0cm9waWNhbCUyMGFlc3RoZXRpY3xlbnwwfHx8fDE3OTE0NTYxODd8MA&ixlib=rb-4.1.0&q=85"
+  },
+  "instructions_to_main_agent": "Build a stunning Balinese Royal Wedding digital invitation (Undangan Digital) for Lira & Febi in ReactJS. Must include: 1) Opening Cover modal/screen with guest name customization ('Untuk Bapak/Ibu/Saudara/i') and 'Buka Undangan' button that triggers background audio (with audio player toggle supporting custom audio URL input); 2) Couple Story & Profile section for Lira Nuraulia Asdwiningtyas, S.Psi. (daughter of Bpk. Hadi Wiyono & Ibu Ni Wayan Rindiasih) and Febi Herlis Setiawan, S.Ak. (son of Bpk. Heriyanto & Ibu Liestari); 3) Countdown timer to 01 November 2026; 4) Event Schedule for Akad (10:00 WIB - selesai) and Resepsi (13:00 - 16:30 WIB) at Balai Sarmili, Depok with direct Google Maps link (https://maps.app.goo.gl/yNbbxjNhwcBPoaVZ7?g_st=ic); 5) Photo Gallery featuring uploaded couple photos in red, gold, and black Balinese traditional attire with lightbox modal; 6) RSVP & Wishes guestbook with live message posting; 7) Repeatable WhatsApp Share generator widget allowing guests to easily copy or share personalized invitation links with guest names; 8) Custom music URL input box allowing users to paste their own song URL anytime. Use Tailwind CSS with dark obsidian background (#0F0E0E), deep red (#8B0000), and royal gold accents (#D4AF37). Ensure all interactive elements have data-testid attributes.",
+  "UNIVERSAL GUIDELINES FOR MAIN AGENT": [
+    "You must not use full transparent backgrounds in headers or overlays.",
+    "All interactive elements must include data-testid attributes.",
+    "Use modern pill-shaped or sharp royal buttons with hover animations.",
+    "Maintain high contrast APCA compliance."
+  ]
+}
