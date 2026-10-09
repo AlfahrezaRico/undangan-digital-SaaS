@@ -21,7 +21,7 @@ const story = [
   { year: "2019", title: "Awal Bertemu", text: "Semesta mempertemukan kami dalam kesederhanaan. Dari sebuah perkenalan singkat, tumbuh rasa yang tak pernah kami duga sebelumnya." },
   { year: "2021", title: "Menjalin Cerita", text: "Hari demi hari kami lewati bersama — belajar memahami, saling menguatkan, dan menemukan rumah pada satu sama lain." },
   { year: "2025", title: "Sebuah Janji", text: "Di hadapan keluarga tercinta, sebuah cincin dan janji diikat. Langkah kecil menuju babak yang lebih besar." },
-  { year: "2026", title: "Selamanya", text: "Dan kini, dengan restu Ida Sang Hyang Widhi Wasa serta doa orang-orang terkasih, kami menyempurnakan separuh perjalanan ini menjadi selamanya." },
+  { year: "2026", title: "Selamanya", text: "Dan kini, dengan ridha Allah SWT serta doa orang-orang terkasih, kami menyempurnakan separuh agama ini menjadi selamanya." },
 ];
 
 const banks = [
@@ -191,7 +191,7 @@ const Home = () => {
           <motion.span className="float-orb orb-1" animate={{ y: [0, -18, 0], rotate: [0, 10, 0] }} transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}>✦</motion.span>
           <motion.span className="float-orb orb-2" animate={{ y: [0, 14, 0], rotate: [0, -8, 0] }} transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}>✦</motion.span>
           <motion.div className="hero-copy" style={{ y: heroCopyY }}>
-            <p className="eyebrow">OM SWASTIASTU</p>
+            <p className="eyebrow">ASSALAMU'ALAIKUM WR. WB.</p>
             <div className="gold-rule" />
             <p className="script"><MaskLine show={opened} delay={0.25}>A celebration of love</MaskLine></p>
             <h1>
@@ -214,7 +214,7 @@ const Home = () => {
           <div className="marquee-track">
             {[0, 1].map(n => (
               <div className="marquee-group" key={n}>
-                <span>LIRA <i>&</i> FEBI</span><b>✦</b><span>01 NOVEMBER 2026</span><b>✦</b><span>BALAI SARMILI · DEPOK</span><b>✦</b><span>OM SWASTIASTU</span><b>✦</b><span>AKAD 10.00 WIB</span><b>✦</b><span>RESEPSI 13.00 — 16.30 WIB</span><b>✦</b>
+                <span>LIRA <i>&</i> FEBI</span><b>✦</b><span>01 NOVEMBER 2026</span><b>✦</b><span>BALAI SARMILI · DEPOK</span><b>✦</b><span>ASSALAMU'ALAIKUM</span><b>✦</b><span>AKAD 10.00 WIB</span><b>✦</b><span>RESEPSI 13.00 — 16.30 WIB</span><b>✦</b>
               </div>
             ))}
           </div>
@@ -225,7 +225,7 @@ const Home = () => {
           <div className="intro-grid">
             <Reveal><p className="script gold-text">Dengan penuh rasa syukur</p><h2>Two souls,<br /><em>one journey.</em></h2></Reveal>
             <Reveal delay={0.15}>
-              <p className="body-copy">Atas rahmat Ida Sang Hyang Widhi Wasa, kami bermaksud mengundang Bapak/Ibu/Saudara/i untuk hadir dan memberikan doa restu pada hari bahagia kami.</p>
+              <p className="body-copy">Assalamu'alaikum Warahmatullahi Wabarakatuh. Dengan memohon rahmat dan ridha Allah SWT, kami bermaksud mengundang Bapak/Ibu/Saudara/i untuk hadir dan memberikan doa restu pada hari bahagia kami.</p>
               <div className="couple-names">
                 <div><h3>Lira Nuraulia<br />Asdwiningtyas, S.Psi.</h3><p>Putri kedua<br />Bpk. Hadi Wiyono &<br />Ibu Ni Wayan Rindiasih</p></div>
                 <div className="ampersand">&</div>
