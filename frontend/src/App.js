@@ -456,7 +456,7 @@ const Home = () => {
         <p>Dengan cinta, Lira & Febi</p>
         <div className="footer-right">
           <span>01 · 11 · 2026</span>
-          {!coupleMode && <a className="couple-link" href="?mode=mempelai" data-testid="couple-area-link"><Lock size={11} /> Area Mempelai</a>}
+          {!coupleMode && !invitedName && <a className="couple-link" href="?mode=mempelai" data-testid="couple-area-link"><Lock size={11} /> Area Mempelai</a>}
         </div>
       </footer>
 
