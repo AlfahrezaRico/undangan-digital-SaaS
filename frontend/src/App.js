@@ -27,8 +27,7 @@ const story = [
 ];
 
 const banks = [
-  { id: "bca", bank: "BCA", number: "1234 5678 90", name: "Lira Nuraulia Asdwiningtyas" },
-  { id: "mandiri", bank: "MANDIRI", number: "9876 5432 10", name: "Febi Herlis Setiawan" },
+  { id: "mandiri", bank: "MANDIRI", number: "6001 2941 203", name: "Lira Nuraulia Asdwiningtyas" },
 ];
 
 const GCAL_URL = "https://calendar.google.com/calendar/render?action=TEMPLATE&text=Pernikahan%20Lira%20%26%20Febi&dates=20261101T030000Z/20261101T093000Z&details=Akad%20Nikah%2010.00%20WIB%20-%20selesai%2C%20dilanjutkan%20Resepsi%2013.00%20-%2016.30%20WIB&location=Balai%20Sarmili%2C%20Depok";
@@ -346,7 +345,7 @@ const Home = () => {
             <Reveal>
               <p className="script gold-text">With love</p>
               <h2>Kirim<br /><em>tanda kasih.</em></h2>
-              <p className="body-copy">Kehadiran dan doa restu Anda adalah hadiah terindah bagi kami. Namun jika Bapak/Ibu/Saudara/i berkenan berbagi tanda kasih, kami sediakan dengan penuh terima kasih.</p>
+              <p className="body-copy">Kehadiran dan doa restu Anda adalah hadiah terindah bagi kami. Terima kasih.</p>
               <button className="gold-button gift-trigger" data-testid="gift-reveal-button" onClick={() => setGiftOpen(!giftOpen)}>
                 <Gift size={15} /> {giftOpen ? "Tutup detail hadiah" : "Kirim Hadiah"}
               </button>

@@ -24,7 +24,6 @@ Undangan digital tema Bali untuk dibagikan via WhatsApp. Pernikahan Lira Nurauli
 - GET /api/files/{path}
 
 ## Backlog
-- P0: Ganti nomor rekening placeholder dengan rekening asli
 - P1: Hitung jumlah tamu per RSVP (bawa berapa orang)
 - P2: Tambah section ayat suci (QS Ar-Rum 21), ganti foto hero/galeri
 
