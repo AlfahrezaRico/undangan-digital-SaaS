@@ -352,11 +352,6 @@ const Home = () => {
             <Reveal>
               <p className="script gold-text">Leave a note</p>
               <h2>Doa baik<br /><em>untuk kami.</em></h2>
-              <div className="rsvp-chips" data-testid="rsvp-summary">
-                <div className="chip" data-testid="rsvp-hadir-count"><BadgeCheck size={14} /><strong>{summary.hadir}</strong> Hadir</div>
-                <div className="chip" data-testid="rsvp-berhalangan-count"><X size={14} /><strong>{summary.berhalangan}</strong> Berhalangan</div>
-                <div className="chip" data-testid="rsvp-total-count"><Users size={14} /><strong>{summary.total}</strong> Respons</div>
-              </div>
               <form onSubmit={submitWish} className="wish-form">
                 <input data-testid="wish-name-input" value={wish.name} onChange={e => setWish({ ...wish, name: e.target.value })} placeholder="Nama Anda" required />
                 <select data-testid="wish-attendance-select" value={wish.attendance} onChange={e => setWish({ ...wish, attendance: e.target.value })}><option>Hadir</option><option>Berhalangan hadir</option></select>
@@ -382,9 +377,23 @@ const Home = () => {
                 <p>Bagikan undangan ini kepada keluarga dan sahabat dengan nama tamu yang berbeda.</p>
               </div>
               <div className="share-actions">
-                <input data-testid="share-guest-input" value={guest} onChange={e => setGuest(e.target.value)} placeholder="Nama tamu" />
+                <span className="share-step">1 · Tulis nama tamu</span>
+                <input data-testid="share-guest-input" value={guest} onChange={e => setGuest(e.target.value)} placeholder="cth: Keluarga Besar Wiyono" />
+                <span className="share-step">2 · Bagikan undangan atas nama tamu itu</span>
                 <button data-testid="whatsapp-share-button" className="whatsapp-button" onClick={shareWhatsApp}><Share2 size={17} /> Bagikan ke WhatsApp</button>
                 <button data-testid="copy-link-button" className="copy-button" onClick={copyLink}>{copied ? <Check size={16} /> : <Copy size={16} />} {copied ? "Tautan disalin" : "Salin tautan undangan"}</button>
+              </div>
+            </div>
+            <div className="rsvp-owner-card" data-testid="rsvp-summary">
+              <Users size={20} />
+              <div className="rsvp-owner-info">
+                <strong>Ringkasan kehadiran tamu</strong>
+                <p>Hanya terlihat di Area Mempelai — tamu tidak melihatnya.</p>
+              </div>
+              <div className="rsvp-chips owner">
+                <div className="chip" data-testid="rsvp-hadir-count"><BadgeCheck size={14} /><strong>{summary.hadir}</strong> Hadir</div>
+                <div className="chip" data-testid="rsvp-berhalangan-count"><X size={14} /><strong>{summary.berhalangan}</strong> Berhalangan</div>
+                <div className="chip" data-testid="rsvp-total-count"><Users size={14} /><strong>{summary.total}</strong> Respons</div>
               </div>
             </div>
             <div className="music-upload-card">

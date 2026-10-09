@@ -202,6 +202,13 @@ button,input,textarea,select{font:inherit}
 .whatsapp-button{background:#d4af37;color:#17110c}
 .copy-button{background:transparent;color:#f2e4c0;margin-top:10px}
 .whatsapp-button:hover,.copy-button:hover{transform:translateY(-2px)}
+.share-step{display:block;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:#e3be4e;margin:2px 0 10px}
+.rsvp-owner-card{margin-top:26px;padding:24px 30px;border:1px solid #c69b53;background:#5f100c;display:flex;align-items:center;gap:18px;flex-wrap:wrap;color:var(--gold)}
+.rsvp-owner-info{flex:1;min-width:220px}
+.rsvp-owner-info strong{font:500 22px Cormorant Garamond,serif;color:var(--cream)}
+.rsvp-owner-info p{font-size:11px;color:#e1c7bd;margin:4px 0 0}
+.rsvp-chips.owner{margin-top:0}
+.rsvp-chips.owner .chip{background:#751510;border-color:#c69b53}
 .music-upload-card{margin-top:26px;padding:28px 30px;border:1px solid #c69b53;background:#5f100c;display:flex;align-items:center;gap:18px;flex-wrap:wrap;color:var(--gold)}
 .music-upload-info{flex:1;min-width:230px}
 .music-upload-info strong{font:500 22px Cormorant Garamond,serif;color:var(--cream)}
