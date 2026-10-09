@@ -1,4 +1,4 @@
-from fastapi import FastAPI, APIRouter, UploadFile, File, HTTPException
+from fastapi import FastAPI, APIRouter, UploadFile, File, HTTPException, Header
 from fastapi.responses import Response
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
@@ -10,8 +10,9 @@ from pathlib import Path
 from pydantic import BaseModel, Field, ConfigDict
 from typing import List
 import uuid
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 import requests
+import jwt
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -143,10 +144,40 @@ async def rsvp_summary():
 
 ALLOWED_AUDIO_EXT = {"mp3", "m4a", "ogg", "wav", "aac"}
 MAX_AUDIO_SIZE = 15 * 1024 * 1024
+JWT_ALGORITHM = "HS256"
+MEMPELAI_PIN = os.environ.get("MEMPELAI_PIN")
+
+
+class MempelaiLogin(BaseModel):
+    pin: str = Field(min_length=4, max_length=64)
+
+
+def create_mempelai_token() -> str:
+    payload = {"sub": "mempelai", "type": "mempelai", "exp": datetime.now(timezone.utc) + timedelta(hours=12)}
+    return jwt.encode(payload, os.environ["JWT_SECRET"], algorithm=JWT_ALGORITHM)
+
+
+def require_mempelai(authorization: str = None):
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="Tidak terautentikasi")
+    try:
+        payload = jwt.decode(authorization[7:], os.environ["JWT_SECRET"], algorithms=[JWT_ALGORITHM])
+        if payload.get("type") != "mempelai":
+            raise HTTPException(status_code=401, detail="Token tidak valid")
+    except jwt.InvalidTokenError:
+        raise HTTPException(status_code=401, detail="Token tidak valid atau kedaluwarsa")
+
+
+@api_router.post("/mempelai/login")
+async def mempelai_login(input: MempelaiLogin):
+    if not MEMPELAI_PIN or input.pin != MEMPELAI_PIN:
+        raise HTTPException(status_code=401, detail="PIN salah")
+    return {"token": create_mempelai_token()}
 
 
 @api_router.post("/music")
-async def upload_music(file: UploadFile = File(...)):
+async def upload_music(file: UploadFile = File(...), authorization: str = Header(None)):
+    require_mempelai(authorization)
     ext = file.filename.rsplit(".", 1)[-1].lower() if "." in file.filename else ""
     content_type = file.content_type or ""
     if ext not in ALLOWED_AUDIO_EXT and not content_type.startswith("audio/"):

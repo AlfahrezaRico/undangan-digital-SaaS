@@ -36,8 +36,12 @@ const GCAL_URL = "https://calendar.google.com/calendar/render?action=TEMPLATE&te
 const Home = () => {
   const params = useMemo(() => new URLSearchParams(window.location.search), []);
   const coupleMode = params.get("mode") === "mempelai";
+  const invitedName = params.get("to") || "";
   const [opened, setOpened] = useState(false);
-  const [guest, setGuest] = useState(params.get("to") || "");
+  const [guest, setGuest] = useState(invitedName);
+  const [token, setToken] = useState(sessionStorage.getItem("mempelai-token") || "");
+  const [pin, setPin] = useState("");
+  const [pinError, setPinError] = useState("");
   const [music, setMusic] = useState({ url: null, filename: null });
   const [localUrl, setLocalUrl] = useState(localStorage.getItem("lira-febi-music") || "");
   const [playing, setPlaying] = useState(false);
@@ -123,6 +127,19 @@ const Home = () => {
     setCopied(true);
     setTimeout(() => setCopied(false), 1800);
   };
+  const loginMempelai = async (e) => {
+    e.preventDefault();
+    setPinError("");
+    try {
+      const r = await axios.post(`${API}/mempelai/login`, { pin });
+      setToken(r.data.token);
+      sessionStorage.setItem("mempelai-token", r.data.token);
+      setPin("");
+    } catch (err) {
+      setPinError(typeof err.response?.data?.detail === "string" ? err.response.data.detail : "PIN salah");
+    }
+  };
+  const logoutMempelai = () => { setToken(""); sessionStorage.removeItem("mempelai-token"); };
   const copyBank = async (bank) => {
     await navigator.clipboard.writeText(bank.number.replace(/\s/g, ""));
     setCopiedBank(bank.id);
@@ -135,12 +152,13 @@ const Home = () => {
     const fd = new FormData();
     fd.append("file", f);
     try {
-      const r = await axios.post(`${API}/music`, fd);
+      const r = await axios.post(`${API}/music`, fd, { headers: { Authorization: `Bearer ${token}` } });
       setMusic(r.data);
       setUploadMsg(`Tersimpan: ${r.data.filename}`);
       setTimeout(() => audioRef.current?.play().catch(() => {}), 300);
     } catch (err) {
-      setUploadMsg(err.response?.data?.detail || "Gagal mengunggah, coba lagi");
+      if (err.response?.status === 401) { logoutMempelai(); setUploadMsg(""); }
+      else setUploadMsg(err.response?.data?.detail || "Gagal mengunggah, coba lagi");
     }
     setUploading(false);
     e.target.value = "";
@@ -168,8 +186,14 @@ const Home = () => {
               <p className="cover-script">The wedding of</p>
               <h1>Lira <span>&</span> Febi</h1>
               <p className="cover-date">MINGGU · 01 · 11 · 2026</p>
-              {guest && <p className="cover-guest" data-testid="cover-guest-name">Kepada Yth.<br /><strong>{guest}</strong></p>}
-              <input data-testid="guest-name-input" value={guest} onChange={e => setGuest(e.target.value)} placeholder="Nama tamu (opsional)" />
+              {invitedName ? (
+                <p className="cover-guest" data-testid="cover-guest-name">Kepada Yth.<br /><strong>{invitedName}</strong></p>
+              ) : (
+                <>
+                  {guest && <p className="cover-guest" data-testid="cover-guest-name">Kepada Yth.<br /><strong>{guest}</strong></p>}
+                  <input data-testid="guest-name-input" value={guest} onChange={e => setGuest(e.target.value)} placeholder="Nama tamu (opsional)" />
+                </>
+              )}
               <button data-testid="open-invitation-button" className="gold-button" onClick={openInvitation}>Buka Undangan <ArrowDown size={16} /></button>
               <p className="cover-note">Balai Sarmili, Depok</p>
             </div>
@@ -370,6 +394,17 @@ const Home = () => {
         {coupleMode && (
           <section className="share-section section" data-testid="couple-area">
             <div className="couple-area-label"><Lock size={12} /> AREA MEMPELAI — tidak terlihat oleh tamu</div>
+            {!token ? (
+              <form className="pin-card" onSubmit={loginMempelai} data-testid="mempelai-login-form">
+                <Lock size={22} />
+                <h3>Area khusus mempelai</h3>
+                <p>Masukkan PIN untuk membuka dashboard mempelai.</p>
+                <input data-testid="mempelai-pin-input" type="password" value={pin} onChange={e => setPin(e.target.value)} placeholder="PIN mempelai" autoComplete="off" />
+                {pinError && <p className="pin-error" data-testid="pin-error">{pinError}</p>}
+                <button className="gold-button" type="submit" data-testid="mempelai-login-button">Buka Area Mempelai</button>
+              </form>
+            ) : (
+            <>
             <div className="share-card">
               <div>
                 <p className="script">Share the joy</p>
@@ -409,6 +444,9 @@ const Home = () => {
               </label>
               <input className="music-url-input" data-testid="music-url-input" value={localUrl} onChange={e => { setLocalUrl(e.target.value); localStorage.setItem("lira-febi-music", e.target.value); }} placeholder="atau tempel URL audio (opsional)" />
             </div>
+            <button className="couple-logout" data-testid="mempelai-logout-button" onClick={logoutMempelai}>Keluar dari Area Mempelai</button>
+            </>
+            )}
           </section>
         )}
       </main>

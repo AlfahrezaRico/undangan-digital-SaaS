@@ -202,6 +202,15 @@ button,input,textarea,select{font:inherit}
 .whatsapp-button{background:#d4af37;color:#17110c}
 .copy-button{background:transparent;color:#f2e4c0;margin-top:10px}
 .whatsapp-button:hover,.copy-button:hover{transform:translateY(-2px)}
+/* PIN gate */
+.pin-card{max-width:440px;margin:0 auto;text-align:center;border:1px solid #c69b53;background:#5f100c;padding:46px 36px;color:var(--gold)}
+.pin-card h3{font:500 34px Cormorant Garamond,serif;color:var(--cream);margin:16px 0 8px}
+.pin-card p{font-size:11px;color:#e1c7bd;margin:0 0 24px}
+.pin-card input{display:block;width:100%;background:transparent;border:0;border-bottom:1px solid #c69b53;padding:12px 10px;color:var(--cream);text-align:center;outline:0;margin-bottom:14px;letter-spacing:.3em;font-size:15px}
+.pin-card input::placeholder{color:#d8b9ad;letter-spacing:.08em;font-size:12px}
+.pin-error{color:#ffb4a8;font-size:11px;margin:0 0 14px}
+.couple-logout{display:block;margin:26px auto 0;background:transparent;border:1px solid #c69b53;color:#f2dfae;font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:11px 20px;cursor:pointer;transition:background-color .2s}
+.couple-logout:hover{background:#d4af3722}
 .share-step{display:block;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:#e3be4e;margin:2px 0 10px}
 .rsvp-owner-card{margin-top:26px;padding:24px 30px;border:1px solid #c69b53;background:#5f100c;display:flex;align-items:center;gap:18px;flex-wrap:wrap;color:var(--gold)}
 .rsvp-owner-info{flex:1;min-width:220px}
