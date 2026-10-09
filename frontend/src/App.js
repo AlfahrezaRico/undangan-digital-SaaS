@@ -18,10 +18,10 @@ const photos = [
 ];
 
 const story = [
-  { year: "2019", title: "Awal Bertemu", text: "Semesta mempertemukan kami dalam kesederhanaan. Dari sebuah perkenalan singkat, tumbuh rasa yang tak pernah kami duga sebelumnya." },
-  { year: "2021", title: "Menjalin Cerita", text: "Hari demi hari kami lewati bersama — belajar memahami, saling menguatkan, dan menemukan rumah pada satu sama lain." },
-  { year: "2025", title: "Sebuah Janji", text: "Di hadapan keluarga tercinta, sebuah cincin dan janji diikat. Langkah kecil menuju babak yang lebih besar." },
-  { year: "2026", title: "Selamanya", text: "Dan kini, dengan ridha Allah SWT serta doa orang-orang terkasih, kami menyempurnakan separuh agama ini menjadi selamanya." },
+  { year: "MASA SEKOLAH", title: "Berjalan Sejajar", text: "Di bawah naungan sekolah yang sama, keduanya pernah berjalan sejajar tanpa saling menyapa, hingga takdir membawa mereka menempuh jalan masing-masing." },
+  { year: "02 JULI 2026", title: "Dipertemukan Kembali", text: "Semesta mempertemukan mereka kembali. Lewat perkenalan yang lebih dalam, keduanya tersadar bahwa masa lalu hanyalah cara Tuhan menyiapkan waktu terbaik untuk saling menemukan." },
+  { year: "03 OKTOBER 2026", title: "Sebuah Pinangan", text: "Berbekal ketulusan dan restu yang luruh dari doa orang tua, ia bersimpuh meminta Lira menjadi teman sehidup sematinya. Air mata haru menyambut kesungguhan itu, mengikat dua hati dalam kepastian." },
+  { year: "01 NOVEMBER 2026", title: "Selamanya", text: "Kini, seluruh rindu dan penantian panjang itu bermuara pada satu hari yang paling dinanti: melangkah bersama menuju ikatan suci, merajut janji di hadapan-Nya untuk saling menggenggam selamanya." },
 ];
 
 const banks = [

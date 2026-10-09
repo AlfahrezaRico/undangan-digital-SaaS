@@ -24,7 +24,9 @@ Undangan digital tema Bali untuk dibagikan via WhatsApp. Pernikahan Lira Nurauli
 - GET /api/files/{path}
 
 ## Backlog
-- P0: Ganti teks Love Story dengan cerita asli dari pengguna
 - P0: Ganti nomor rekening placeholder dengan rekening asli
 - P1: Hitung jumlah tamu per RSVP (bawa berapa orang)
-- P2: Ganti foto hero/galeri, tambah section ayat suci/protokol
+- P2: Tambah section ayat suci (QS Ar-Rum 21), ganti foto hero/galeri
+
+## Riwayat
+- 09 Okt 2026: Iterasi 2 (musik upload, RSVP summary, kalender, hadiah, 3D, Area Mempelai); ucapan diganti bernuansa Islam; Love Story diisi cerita asli dari pengguna (sekolah, 02 Jul 2026, pinangan 03 Okt 2026, akad 01 Nov 2026)
