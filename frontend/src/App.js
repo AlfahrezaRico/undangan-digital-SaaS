@@ -15,6 +15,8 @@ const photos = [
   "https://customer-assets-4nw71qhi.emergentagent.net/job_e21eee82-41e5-497d-bbbb-3af56464b787/artifacts/vmrzlpkx_WhatsApp%20Image%202026-10-06%20at%2012.34.25.jpeg",
   "https://customer-assets-4nw71qhi.emergentagent.net/job_e21eee82-41e5-497d-bbbb-3af56464b787/artifacts/5lhyj9rx_WhatsApp%20Image%202026-10-06%20at%2012.34.25%20%283%29.jpeg",
   "https://customer-assets-4nw71qhi.emergentagent.net/job_e21eee82-41e5-497d-bbbb-3af56464b787/artifacts/dfhzkerh_WhatsApp%20Image%202026-10-06%20at%2012.34.26%20%283%29.jpeg",
+  "/photos/momen-6.jpg",
+  "/photos/momen-7.jpg",
 ];
 
 const story = [
@@ -302,8 +304,20 @@ const Home = () => {
           </div>
         </section>
 
+        <section className="videos section" id="videos">
+          <Reveal className="section-kicker">05 / MOMENTS IN MOTION</Reveal>
+          <div className="videos-head">
+            <Reveal><p className="script gold-text">Moving frames</p><h2>Momen yang<br /><em>hidup.</em></h2></Reveal>
+            <Reveal delay={0.15}><p className="body-copy">Beberapa detik yang tak bisa diwakili foto. Tekan untuk memutar cuplikan perjalanan kami.</p></Reveal>
+          </div>
+          <div className="videos-grid">
+            <Reveal><Tilt intensity={6} className="video-card" data-testid="video-card-1"><video data-testid="video-1" src="/videos/momen-1.mp4" poster="/videos/poster-1.jpg" controls preload="metadata" playsInline /><span className="video-label">CUPLIKAN 01</span></Tilt></Reveal>
+            <Reveal delay={0.12}><Tilt intensity={6} className="video-card portrait" data-testid="video-card-2"><video data-testid="video-2" src="/videos/momen-2.mp4" poster="/videos/poster-2.jpg" controls preload="metadata" playsInline /><span className="video-label">CUPLIKAN 02</span></Tilt></Reveal>
+          </div>
+        </section>
+
         <section className="gift section" id="gift">
-          <Reveal className="section-kicker">05 / TANDA KASIH</Reveal>
+          <Reveal className="section-kicker">06 / TANDA KASIH</Reveal>
           <div className="gift-box">
             <Reveal>
               <p className="script gold-text">With love</p>
@@ -333,7 +347,7 @@ const Home = () => {
         </section>
 
         <section className="wishes section">
-          <Reveal className="section-kicker">06 / WISHES & RSVP</Reveal>
+          <Reveal className="section-kicker">07 / WISHES & RSVP</Reveal>
           <div className="wishes-grid">
             <Reveal>
               <p className="script gold-text">Leave a note</p>
