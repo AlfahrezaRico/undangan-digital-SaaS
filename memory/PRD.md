@@ -1,34 +1,30 @@
-# PRD — Undangan Digital Bali Lira & Febi
+# PRD — Undangan Digital Bali: Lira & Febi
 
-## Original problem statement
-buatkan Undangan digital dengan tema bali untuk dibagikan di whatsapp
+## Problem Statement (asli)
+Undangan digital tema Bali untuk dibagikan via WhatsApp. Pernikahan Lira Nuraulia Asdwiningtyas, S.Psi. (putri Bpk. Hadi Wiyono & Ibu Ni Wayan Rindiasih) & Febi Herlis Setiawan, S.Ak. (putra Bpk. Heriyanto & Ibu Liestari), 01 November 2026, Balai Sarmili, Depok. Akad 10.00 WIB–selesai, Resepsi 13.00–16.30 WIB. Maps: https://maps.app.goo.gl/yNbbxjNhwcBPoaVZ7?g_st=ic
 
-## Product details
-- Mempelai: Lira Nuraulia Asdwiningtyas, S.Psi. & Febi Herlis Setiawan, S.Ak.
-- Acara: 01 November 2026 di Balai Sarmili, Depok.
-- Akad: 10.00 WIB - selesai.
-- Resepsi: 13.00 - 16.30 WIB.
-- Kebutuhan utama: undangan dapat dibagikan berulang via WhatsApp dan lagu bisa ditambahkan kemudian.
+## Iterasi 2 (09 Okt 2026)
+- Upload file audio langsung (MP3/dll), auto-play saat "Buka Undangan"
+- Ringkasan RSVP (jumlah hadir/berhalangan)
+- Tombol "Simpan ke Kalender" (Google Calendar + unduh .ics)
+- Bagian Love Story (TEKS MASIH CONTOH — menunggu cerita asli dari pengguna)
+- Tombol "Kirim Hadiah" dengan rekening bank PLACEHOLDER (menunggu nomor asli)
+- Efek 3D (tilt card, parallax hero) + desain motion premium (framer-motion, lenis, marquee)
+- "Share the joy / Ajak orang-orang tersayang" + upload musik DIPINDAH ke Area Mempelai (?mode=mempelai) — tidak terlihat tamu
 
-## Architecture decisions
-- React single-page invitation with responsive mobile-first layout.
-- FastAPI + MongoDB endpoint for wishes/guestbook persistence.
-- Uploaded couple photos are used as gallery assets.
-- Music is user-provided through a URL and persisted locally in the browser.
-- WhatsApp share uses a generated message with optional guest name and current invitation URL.
+## Arsitektur
+- Backend: FastAPI `/api` — wishes, rsvp-summary (agregasi MongoDB), music upload/get, files streaming via Emergent Object Storage (requests + EMERGENT_LLM_KEY)
+- Frontend: React + Tailwind + framer-motion + lenis; audio via <audio> ke /api/files/...
+- DB: wishes, files (soft-delete), settings (musik aktif)
 
-## Implemented
-- Balinese royal visual system: obsidian, deep red, gold, geometric textile-inspired pattern, Cormorant Garamond typography.
-- Opening cover with guest-name personalization and invitation reveal.
-- Hero, couple profiles, countdown, Akad/Resepsi schedule, Google Maps link.
-- Five-photo gallery with lightbox viewer.
-- WhatsApp share and copy-link actions.
-- Wishes form with attendance selection and persisted backend guestbook.
-- Music URL input and playback toggle.
-- Responsive layout verified on desktop and mobile with no horizontal overflow.
+## Endpoint kunci
+- GET/POST /api/wishes
+- GET /api/rsvp-summary
+- POST /api/music (upload), GET /api/music
+- GET /api/files/{path}
 
 ## Backlog
-- P0: None.
-- P1: Add RSVP summary dashboard for the couple.
-- P1: Add a dedicated audio upload flow for guests who do not have a public song URL.
-- P2: Add downloadable calendar event (.ics) and a QR code for printed cards.
+- P0: Ganti teks Love Story dengan cerita asli dari pengguna
+- P0: Ganti nomor rekening placeholder dengan rekening asli
+- P1: Hitung jumlah tamu per RSVP (bawa berapa orang)
+- P2: Ganti foto hero/galeri, tambah section ayat suci/protokol
