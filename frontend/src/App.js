@@ -192,6 +192,14 @@ const Home = () => {
     a.click();
     URL.revokeObjectURL(a.href);
   };
+  const bgWasPlaying = useRef(false);
+  const handleVideoPlay = () => {
+    if (audioRef.current && !audioRef.current.paused) { bgWasPlaying.current = true; audioRef.current.pause(); }
+    else bgWasPlaying.current = false;
+  };
+  const handleVideoStop = () => {
+    if (bgWasPlaying.current) { audioRef.current?.play().catch(() => {}); bgWasPlaying.current = false; }
+  };
   const go = (e, target) => { e.preventDefault(); lenisRef.current?.scrollTo(target, { offset: -70 }); };
 
   return (
@@ -356,8 +364,8 @@ const Home = () => {
             <Reveal delay={0.15}><p className="body-copy">Beberapa detik yang tak bisa diwakili foto. Tekan untuk memutar cuplikan perjalanan kami.</p></Reveal>
           </div>
           <div className="videos-grid">
-            <Reveal><Tilt intensity={6} className="video-card" data-testid="video-card-1"><video data-testid="video-1" src="/videos/momen-1.mp4" poster="/videos/poster-1.jpg" controls preload="metadata" playsInline /><span className="video-label">CUPLIKAN 01</span></Tilt></Reveal>
-            <Reveal delay={0.12}><Tilt intensity={6} className="video-card portrait" data-testid="video-card-2"><video data-testid="video-2" src="/videos/momen-2.mp4" poster="/videos/poster-2.jpg" controls preload="metadata" playsInline /><span className="video-label">CUPLIKAN 02</span></Tilt></Reveal>
+            <Reveal><Tilt intensity={6} className="video-card" data-testid="video-card-1"><video data-testid="video-1" src="/videos/momen-1.mp4" poster="/videos/poster-1.jpg" controls preload="metadata" playsInline onPlay={handleVideoPlay} onPause={handleVideoStop} onEnded={handleVideoStop} /><span className="video-label">CUPLIKAN 01</span></Tilt></Reveal>
+            <Reveal delay={0.12}><Tilt intensity={6} className="video-card portrait" data-testid="video-card-2"><video data-testid="video-2" src="/videos/momen-2.mp4" poster="/videos/poster-2.jpg" controls preload="metadata" playsInline onPlay={handleVideoPlay} onPause={handleVideoStop} onEnded={handleVideoStop} /><span className="video-label">CUPLIKAN 02</span></Tilt></Reveal>
           </div>
         </section>
 
@@ -451,6 +459,20 @@ const Home = () => {
                 <div className="chip" data-testid="rsvp-berhalangan-count"><X size={14} /><strong>{summary.berhalangan}</strong> Berhalangan</div>
                 <div className="chip" data-testid="rsvp-total-count"><Users size={14} /><strong>{summary.total}</strong> Respons</div>
               </div>
+            </div>
+            <div className="rsvp-list-card" data-testid="rsvp-list">
+              <strong>Daftar respons tamu</strong>
+              {wishes.length ? (
+                <ul>
+                  {wishes.map(w => (
+                    <li key={w.id} data-testid="rsvp-list-item">
+                      <span className="rsvp-name">{w.name}</span>
+                      <span className={`rsvp-badge ${w.attendance === "Hadir" ? "yes" : "no"}`}>{w.attendance}</span>
+                      <span className="rsvp-msg">“{w.message}”</span>
+                    </li>
+                  ))}
+                </ul>
+              ) : <p>Belum ada respons tamu.</p>}
             </div>
             <div className="music-upload-card">
               <Music2 size={20} />
