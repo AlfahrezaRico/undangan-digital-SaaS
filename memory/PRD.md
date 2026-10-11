@@ -27,6 +27,7 @@ Undangan digital tema Bali untuk dibagikan via WhatsApp. Pernikahan Lira Nurauli
 - P1: Hitung jumlah tamu per RSVP (bawa berapa orang)
 - P2: Tambah section ayat suci (QS Ar-Rum 21), ganti foto hero/galeri
 - Selesai: daftar nama RSVP di Area Mempelai; musik auto-pause saat video diputar
+- 11 Okt 2026: Foto hero diganti foto baru (hero.jpg); teks pinangan "ia bersimpuh" → "Febi meminta"; kartu rekening pindah ke pop-up modal via tombol "Kirim Tanda Kasih"
 
 ## Riwayat
 - 09 Okt 2026: Iterasi 2 (musik upload, RSVP summary, kalender, hadiah, 3D, Area Mempelai); ucapan diganti bernuansa Islam; Love Story diisi cerita asli dari pengguna (sekolah, 02 Jul 2026, pinangan 03 Okt 2026, akad 01 Nov 2026)

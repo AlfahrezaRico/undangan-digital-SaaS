@@ -168,8 +168,14 @@ button,input,textarea,select{font:inherit}
 
 /* Gift */
 .gift{background:#111010;perspective:1100px}
-.gift-box{display:grid;grid-template-columns:1fr 1fr;gap:8vw;align-items:start}
+.gift-box{display:grid;grid-template-columns:1fr;max-width:640px}
 .gift-trigger{margin-top:34px}
+.gift-modal{position:fixed;inset:0;z-index:32;background:#050505e8;display:grid;place-items:center;padding:5vw}
+.gift-modal-card{position:relative;width:min(94vw,520px);border:1px solid #6e5c27;background:linear-gradient(160deg,#191512,#211a12);padding:40px 34px;box-shadow:0 40px 90px #000000aa}
+.gift-modal-card h3{font:500 40px/1 Cormorant Garamond,serif;margin:8px 0 26px;color:var(--cream)}
+.gift-modal-card h3 em{color:var(--gold);font-style:italic}
+.gift-modal-close{position:absolute;top:16px;right:16px;width:36px;height:36px;border:1px solid #806e39;border-radius:50%;background:transparent;color:var(--gold);display:grid;place-items:center;cursor:pointer;transition:background-color .2s}
+.gift-modal-close:hover{background:#d4af3722}
 .bank-list{display:flex;flex-direction:column;gap:18px}
 .bank-card{border:1px solid #6e5c27;background:linear-gradient(135deg,#1c1814 0%,#2a1c11 60%,#3a2410 100%);padding:28px;box-shadow:0 24px 50px #00000055}
 .bank-top{display:flex;justify-content:space-between;align-items:center;color:var(--gold)}

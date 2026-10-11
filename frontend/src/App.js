@@ -22,7 +22,7 @@ const photos = [
 const story = [
   { year: "MASA SEKOLAH", title: "Berjalan Sejajar", text: "Di bawah naungan sekolah yang sama, keduanya pernah berjalan sejajar tanpa saling menyapa, hingga takdir membawa mereka menempuh jalan masing-masing." },
   { year: "02 JULI 2026", title: "Dipertemukan Kembali", text: "Semesta mempertemukan mereka kembali. Lewat perkenalan yang lebih dalam, keduanya tersadar bahwa masa lalu hanyalah cara Tuhan menyiapkan waktu terbaik untuk saling menemukan." },
-  { year: "03 OKTOBER 2026", title: "Sebuah Pinangan", text: "Berbekal ketulusan dan restu yang luruh dari doa orang tua, ia bersimpuh meminta Lira menjadi teman sehidup sematinya. Air mata haru menyambut kesungguhan itu, mengikat dua hati dalam kepastian." },
+  { year: "03 OKTOBER 2026", title: "Sebuah Pinangan", text: "Berbekal ketulusan dan restu yang luruh dari doa orang tua, Febi meminta Lira menjadi teman sehidup sematinya. Air mata haru menyambut kesungguhan itu, mengikat dua hati dalam kepastian." },
   { year: "01 NOVEMBER 2026", title: "Selamanya", text: "Kini, seluruh rindu dan penantian panjang itu bermuara pada satu hari yang paling dinanti: melangkah bersama menuju ikatan suci, merajut janji di hadapan-Nya untuk saling menggenggam selamanya." },
 ];
 
@@ -259,7 +259,7 @@ const Home = () => {
           </motion.div>
           <motion.div className="hero-image" style={{ y: heroImgY }}>
             <Tilt intensity={6}>
-              <img data-testid="hero-couple-image" src={photos[2]} alt="Lira dan Febi mengenakan busana adat Bali" />
+              <img data-testid="hero-couple-image" src="/photos/hero.jpg" alt="Lira dan Febi mengenakan busana adat Bali" />
               <div className="image-frame" />
             </Tilt>
           </motion.div>
@@ -377,26 +377,10 @@ const Home = () => {
               <p className="script gold-text">With love</p>
               <h2>Kirim<br /><em>tanda kasih.</em></h2>
               <p className="body-copy">Kehadiran dan doa restu Anda adalah hadiah terindah bagi kami. Terima kasih.</p>
-              <button className="gold-button gift-trigger" data-testid="gift-reveal-button" onClick={() => setGiftOpen(!giftOpen)}>
-                <Gift size={15} /> {giftOpen ? "Tutup detail hadiah" : "Kirim Hadiah"}
+              <button className="gold-button gift-trigger" data-testid="gift-reveal-button" onClick={() => setGiftOpen(true)}>
+                <Gift size={15} /> Kirim Tanda Kasih
               </button>
             </Reveal>
-            <AnimatePresence>
-              {giftOpen && (
-                <motion.div className="bank-list" data-testid="gift-details" initial={{ opacity: 0, y: 26, rotateX: -12 }} animate={{ opacity: 1, y: 0, rotateX: 0 }} exit={{ opacity: 0, y: 20, rotateX: -10 }} transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}>
-                  {banks.map(b => (
-                    <Tilt key={b.id} intensity={8} className="bank-card" data-testid={`bank-card-${b.id}`}>
-                      <div className="bank-top"><span className="bank-name">{b.bank}</span><Sparkles size={15} /></div>
-                      <strong className="bank-number">{b.number}</strong>
-                      <div className="bank-bottom">
-                        <span>a.n. {b.name}</span>
-                        <button className="bank-copy" data-testid={`copy-${b.id}-button`} onClick={() => copyBank(b)}>{copiedBank === b.id ? <Check size={14} /> : <Copy size={14} />} {copiedBank === b.id ? "Tersalin" : "Salin"}</button>
-                      </div>
-                    </Tilt>
-                  ))}
-                </motion.div>
-              )}
-            </AnimatePresence>
           </div>
         </section>
 
@@ -505,6 +489,30 @@ const Home = () => {
       </footer>
 
       {activeMusicUrl && <audio ref={audioRef} src={activeMusicUrl} loop onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} />}
+
+      <AnimatePresence>
+        {giftOpen && (
+          <motion.div className="gift-modal" data-testid="gift-modal" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setGiftOpen(false)}>
+            <motion.div className="gift-modal-card" initial={{ scale: 0.92, y: 34, opacity: 0 }} animate={{ scale: 1, y: 0, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }} transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }} onClick={e => e.stopPropagation()}>
+              <button className="gift-modal-close" data-testid="gift-close-button" onClick={() => setGiftOpen(false)} aria-label="Tutup"><X size={18} /></button>
+              <p className="script gold-text">With love</p>
+              <h3>Tanda kasih<br /><em>untuk kami.</em></h3>
+              <div className="bank-list" data-testid="gift-details">
+                {banks.map(b => (
+                  <Tilt key={b.id} intensity={8} className="bank-card" data-testid={`bank-card-${b.id}`}>
+                    <div className="bank-top"><span className="bank-name">{b.bank}</span><Sparkles size={15} /></div>
+                    <strong className="bank-number">{b.number}</strong>
+                    <div className="bank-bottom">
+                      <span>a.n. {b.name}</span>
+                      <button className="bank-copy" data-testid={`copy-${b.id}-button`} onClick={() => copyBank(b)}>{copiedBank === b.id ? <Check size={14} /> : <Copy size={14} />} {copiedBank === b.id ? "Tersalin" : "Salin"}</button>
+                    </div>
+                  </Tilt>
+                ))}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <AnimatePresence>
         {lightbox && (
