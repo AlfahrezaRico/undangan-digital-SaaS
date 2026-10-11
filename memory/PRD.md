@@ -30,4 +30,6 @@ Undangan digital tema Bali untuk dibagikan via WhatsApp. Pernikahan Lira Nurauli
 ## Riwayat
 - 09 Okt 2026: Iterasi 2 (musik upload, RSVP summary, kalender, hadiah, 3D, Area Mempelai); ucapan diganti bernuansa Islam; Love Story diisi cerita asli dari pengguna (sekolah, 02 Jul 2026, pinangan 03 Okt 2026, akad 01 Nov 2026)
 - 09 Okt 2026: 2 video dikompres (ffmpeg crf 27 + faststart: 18,7MB→12,9MB dan 7,6MB→2,3MB) di /frontend/public/videos + section "Momen yang hidup" (05), preload=metadata + poster; 2 foto baru dikompres ke /frontend/public/photos (galeri kini 7 foto)
-- 09 Okt 2026: Hapus ucapan uji; ringkasan RSVP pindah ke Area Mempelai; share WA 2 langkah (isi nama tamu dulu); nama tamu dari ?to= TERKUNCI (tidak bisa diedit tamu); Area Mempelai kini dijaga PIN (MEMPELAI_PIN di .env, JWT 12 jam, upload musik butuh token)
+- 09 Okt 2026: Hapus ucapan uji; ringkasan RSVP pindah ke Area Mempelai; share WA 2 langkah (isi nama tamu dulu); nama tamu dari ?to= TERKUNCI (tidak bisa diedit tamu); Area Mempelai kini dijaga PIN (MEMPELAI_PIN di .env, JWT 12 jam, upload musik butuh token); tombol Area Mempelai disembunyikan pada tautan tamu (?to=)
+- 09 Okt 2026: Rekening asli Mandiri 60012941203 a.n. Lira (BCA dihapus); kalimat hadiah disederhanakan
+- 09 Okt 2026: Pola latar diamond dihapus (latar polos); efek bunga emas jepun berjatuhan (SVG, 14 kelopak, komponen GoldFlowers) terinspirasi gelungan mempelai wanita

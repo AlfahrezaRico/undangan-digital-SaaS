@@ -32,6 +32,27 @@ const banks = [
 
 const GCAL_URL = "https://calendar.google.com/calendar/render?action=TEMPLATE&text=Pernikahan%20Lira%20%26%20Febi&dates=20261101T030000Z/20261101T093000Z&details=Akad%20Nikah%2010.00%20WIB%20-%20selesai%2C%20dilanjutkan%20Resepsi%2013.00%20-%2016.30%20WIB&location=Balai%20Sarmili%2C%20Depok";
 
+const GoldFlowers = () => {
+  const petals = useMemo(() => Array.from({ length: 14 }, (_, i) => ({
+    left: (i * 7.3 + Math.random() * 5) % 100,
+    size: 11 + Math.random() * 15,
+    delay: -(Math.random() * 16),
+    dur: 11 + Math.random() * 9,
+    op: 0.35 + Math.random() * 0.4,
+  })), []);
+  return (
+    <div className="gold-flowers" aria-hidden="true">
+      <svg width="0" height="0" style={{ position: "absolute" }}><defs><radialGradient id="gold-petal-g" cx="35%" cy="30%"><stop offset="0%" stopColor="#f8e19a" /><stop offset="55%" stopColor="#d4af37" /><stop offset="100%" stopColor="#97710f" /></radialGradient></defs></svg>
+      {petals.map((p, i) => (
+        <svg key={i} className="petal" style={{ left: `${p.left}%`, width: p.size, animationDelay: `${p.delay}s`, animationDuration: `${p.dur}s`, opacity: p.op }} viewBox="0 0 48 48">
+          <g fill="url(#gold-petal-g)">{[0, 72, 144, 216, 288].map(a => <ellipse key={a} cx="24" cy="13.5" rx="6.2" ry="11.5" transform={`rotate(${a} 24 24)`} />)}</g>
+          <circle cx="24" cy="24" r="3.4" fill="#f9e7ac" />
+        </svg>
+      ))}
+    </div>
+  );
+};
+
 const Home = () => {
   const params = useMemo(() => new URLSearchParams(window.location.search), []);
   const coupleMode = params.get("mode") === "mempelai";
@@ -175,6 +196,7 @@ const Home = () => {
 
   return (
     <div className="invite-shell">
+      <GoldFlowers />
       <AnimatePresence>
         {!opened && (
           <motion.div className="cover" data-testid="invitation-cover" exit={{ opacity: 0, y: -70 }} transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}>

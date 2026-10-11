@@ -41,7 +41,17 @@ button,input,textarea,select{font:inherit}
 
 /* Hero */
 .hero{min-height:100vh;position:relative;padding:150px 10vw 80px;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:6vw;background:radial-gradient(circle at 78% 20%,#38120e 0,transparent 35%),linear-gradient(110deg,#100f0f,#15100f);perspective:1200px}
-.hero:before,.section:before{content:"";position:absolute;inset:0;opacity:.12;background-image:linear-gradient(135deg,transparent 46%,#d4af37 47%,transparent 48%),linear-gradient(45deg,transparent 46%,#d4af37 47%,transparent 48%);background-size:90px 90px;pointer-events:none}
+/* Golden frangipani petals (gelungan-inspired) */
+.gold-flowers{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.petal{position:absolute;top:-10%;animation:petal-fall linear infinite;filter:drop-shadow(0 0 6px #d4af3740)}
+@keyframes petal-fall{
+0%{transform:translate3d(0,-10vh,0) rotate(0deg)}
+25%{transform:translate3d(26px,26vh,0) rotate(95deg)}
+50%{transform:translate3d(-20px,56vh,0) rotate(195deg)}
+75%{transform:translate3d(22px,82vh,0) rotate(285deg)}
+100%{transform:translate3d(-10px,112vh,0) rotate(360deg)}
+}
+@media(max-width:760px){.petal{animation-duration:14s}}
 .hero-copy{position:relative;z-index:1}
 .hero .eyebrow{color:var(--gold)}
 .gold-rule{height:1px;width:70px;background:var(--gold);margin:24px 0}
