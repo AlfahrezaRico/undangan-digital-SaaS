@@ -152,9 +152,24 @@ const Home = () => {
   const openInvitation = () => {
     setOpened(true);
     if (audioRef.current) {
-      audioRef.current.play().catch(err => {
-        console.warn("Autoplay was prevented by browser:", err);
-      });
+      audioRef.current.currentTime = 0;
+      const playPromise = audioRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          setPlaying(true);
+        }).catch(err => {
+          console.warn("Autoplay was prevented by browser:", err);
+          const resumeAudio = () => {
+            if (audioRef.current) {
+              audioRef.current.play().then(() => setPlaying(true)).catch(() => {});
+            }
+            window.removeEventListener("click", resumeAudio);
+            window.removeEventListener("touchstart", resumeAudio);
+          };
+          window.addEventListener("click", resumeAudio, { once: true });
+          window.addEventListener("touchstart", resumeAudio, { once: true });
+        });
+      }
     }
   };
   const toggleMusic = () => {
@@ -259,44 +274,66 @@ const Home = () => {
     setCopiedBank(bank.id);
     setTimeout(() => setCopiedBank(""), 1800);
   };
-  const uploadMusic = async (e) => {
+  const [selectedMusicFile, setSelectedMusicFile] = useState(null);
+  const [savingMusic, setSavingMusic] = useState(false);
+
+  const onSelectMusicFile = (e) => {
     const f = e.target.files?.[0];
     if (!f) return;
-    if (f.size > 3.5 * 1024 * 1024) {
+    setSelectedMusicFile(f);
+    setUploadMsg(`File dipilih: ${f.name} (${(f.size / (1024 * 1024)).toFixed(2)} MB). Klik "Simpan Musik" di bawah.`);
+  };
+
+  const handleSaveMusic = async () => {
+    setSavingMusic(true);
+    setUploadMsg("");
+
+    if (selectedMusicFile) {
+      const f = selectedMusicFile;
       const reader = new FileReader();
-      reader.onload = (ev) => {
+      reader.onload = async (ev) => {
         const dataUrl = ev.target.result;
-        setMusic({ url: dataUrl, filename: f.name });
-        try { localStorage.setItem("lira-febi-music", dataUrl); } catch {}
-        setUploadMsg(`File >3.5MB aktif di perangkat ini: ${f.name}. Untuk tersimpan permanen di semua tamu, gunakan file MP3 <3.5MB atau tautkan URL audio.`);
-        setTimeout(() => audioRef.current?.play().catch(() => {}), 300);
+        try {
+          if (f.size <= 3.5 * 1024 * 1024) {
+            await axios.post(`${API}/music`, { url: dataUrl, filename: f.name });
+          }
+          setMusic({ url: dataUrl, filename: f.name });
+          try { localStorage.setItem("lira-febi-music", dataUrl); } catch {}
+          setUploadMsg(`Musik "${f.name}" berhasil disimpan!`);
+          setTimeout(() => audioRef.current?.play().catch(() => {}), 300);
+        } catch (err) {
+          setMusic({ url: dataUrl, filename: f.name });
+          try { localStorage.setItem("lira-febi-music", dataUrl); } catch {}
+          setUploadMsg(`Musik tersimpan di perangkat ini: ${f.name}`);
+        }
+        setSavingMusic(false);
+      };
+      reader.onerror = () => {
+        setSavingMusic(false);
+        setUploadMsg("Gagal membaca file audio.");
       };
       reader.readAsDataURL(f);
       return;
     }
-    setUploading(true);
-    setUploadMsg("");
-    const reader = new FileReader();
-    reader.onload = async (ev) => {
-      const dataUrl = ev.target.result;
+
+    if (localUrl.trim()) {
       try {
-        await axios.post(`${API}/music`, { url: dataUrl, filename: f.name });
-        setMusic({ url: dataUrl, filename: f.name });
-        setUploadMsg(`Tersimpan: ${f.name}`);
+        await axios.post(`${API}/music`, { url: localUrl.trim(), filename: "Lagu Pernikahan (Tautan)" });
+        setMusic({ url: localUrl.trim(), filename: "Lagu Pernikahan (Tautan)" });
+        try { localStorage.setItem("lira-febi-music", localUrl.trim()); } catch {}
+        setUploadMsg("Tautan musik berhasil disimpan!");
         setTimeout(() => audioRef.current?.play().catch(() => {}), 300);
       } catch (err) {
-        setMusic({ url: dataUrl, filename: f.name });
-        localStorage.setItem("lira-febi-music", dataUrl);
-        setUploadMsg(`Tersimpan lokal: ${f.name}`);
+        setMusic({ url: localUrl.trim(), filename: "Lagu Pernikahan (Tautan)" });
+        try { localStorage.setItem("lira-febi-music", localUrl.trim()); } catch {}
+        setUploadMsg("Tautan musik tersimpan!");
       }
-      setUploading(false);
-    };
-    reader.onerror = () => {
-      setUploading(false);
-      setUploadMsg("Gagal membaca file audio.");
-    };
-    reader.readAsDataURL(f);
-    e.target.value = "";
+      setSavingMusic(false);
+      return;
+    }
+
+    setSavingMusic(false);
+    setUploadMsg("Pilih file audio atau masukkan tautan musik terlebih dahulu.");
   };
   const downloadICS = () => {
     const ics = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//LiraFebi//Undangan//ID", "BEGIN:VEVENT", "UID:lira-febi-2026@undangan", "DTSTAMP:20260701T000000Z", "DTSTART:20261101T020000Z", "DTEND:20261101T100000Z", "SUMMARY:Pernikahan Lira & Febi", "DESCRIPTION:Akad Nikah 09.00 WIB - selesai\\, dilanjutkan Resepsi 13.00 - 17.00 WIB", "LOCATION:Balai Sarmili\\, Depok", "END:VEVENT", "END:VCALENDAR"].join("\r\n");
@@ -589,14 +626,32 @@ const Home = () => {
               <Music2 size={20} />
               <div className="music-upload-info">
                 <strong>Musik undangan</strong>
-                <p>{music.filename ? `Sedang dipakai: ${music.filename}` : "Unggah lagu pilihanmu — otomatis diputar saat tamu menekan Buka Undangan."}</p>
+                <p>{music.filename ? `Sedang aktif: ${music.filename}` : "Gunakan audio bawaan atau unggah lagu pilihanmu — otomatis berputar saat tamu menekan Buka Undangan."}</p>
                 {uploadMsg && <p className="upload-msg" data-testid="music-upload-status">{uploadMsg}</p>}
               </div>
-              <label className="upload-zone" data-testid="music-upload-button">
-                <Upload size={16} /> {uploading ? "Mengunggah..." : "Unggah MP3"}
-                <input data-testid="music-upload-input" type="file" accept="audio/*,.mp3,.m4a,.ogg,.wav" onChange={uploadMusic} hidden disabled={uploading} />
-              </label>
-              <input className="music-url-input" data-testid="music-url-input" value={localUrl} onChange={e => { setLocalUrl(e.target.value); localStorage.setItem("lira-febi-music", e.target.value); }} placeholder="atau tempel URL audio (opsional)" />
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 8, width: "100%", marginTop: 8 }}>
+                <label className="upload-zone" data-testid="music-upload-button" style={{ cursor: "pointer" }}>
+                  <Upload size={16} /> {selectedMusicFile ? `Ganti File (${selectedMusicFile.name.slice(0, 16)}...)` : "Pilih File MP3"}
+                  <input data-testid="music-upload-input" type="file" accept="audio/*,.mp3,.m4a,.ogg,.wav" onChange={onSelectMusicFile} hidden disabled={savingMusic} />
+                </label>
+                <button
+                  type="button"
+                  className="gold-button"
+                  onClick={handleSaveMusic}
+                  disabled={savingMusic}
+                  style={{ padding: "10px 18px", fontSize: 13, borderRadius: 6, fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 6 }}
+                >
+                  <Check size={15} /> {savingMusic ? "Menyimpan..." : "Simpan Musik"}
+                </button>
+              </div>
+              <input
+                className="music-url-input"
+                data-testid="music-url-input"
+                value={localUrl}
+                onChange={e => { setLocalUrl(e.target.value); }}
+                placeholder="atau tempel tautan URL audio (opsional), lalu klik Simpan Musik"
+                style={{ marginTop: 8 }}
+              />
             </div>
             <button className="couple-logout" data-testid="mempelai-logout-button" onClick={logoutMempelai}>Keluar dari Area Mempelai</button>
             </>
