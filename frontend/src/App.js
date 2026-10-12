@@ -94,14 +94,17 @@ const Home = () => {
   const heroCopyY = useTransform(scrollYProgress, [0, 1], [0, -70]);
 
   const DEFAULT_MUSIC = "/audio/wedding-song.mp3";
+  const [audioError, setAudioError] = useState(false);
+
   const activeMusicUrl = useMemo(() => {
+    if (audioError) return DEFAULT_MUSIC;
     const raw = music?.url || localUrl || DEFAULT_MUSIC;
-    if (!raw) return "";
+    if (!raw) return DEFAULT_MUSIC;
     if (raw.startsWith("data:") || raw.startsWith("http://") || raw.startsWith("https://") || raw.startsWith("/")) {
       return raw;
     }
     return BACKEND_URL ? `${BACKEND_URL}${raw}` : raw;
-  }, [music?.url, localUrl]);
+  }, [music?.url, localUrl, audioError]);
 
   useEffect(() => {
     const lenis = new Lenis({ duration: 1.15, smoothWheel: true });
@@ -393,7 +396,14 @@ const Home = () => {
           <a href="#event" data-testid="nav-event-link" onClick={e => go(e, "#event")}>Acara</a>
           <a href="#gallery" data-testid="nav-gallery-link" onClick={e => go(e, "#gallery")}>Galeri</a>
         </div>
-        <button className="icon-button" data-testid="music-toggle-button" onClick={toggleMusic} aria-label="Putar musik" disabled={!activeMusicUrl}>{playing ? <Volume2 size={18} /> : <VolumeX size={18} />}</button>
+        <button
+          className="icon-button"
+          data-testid="music-toggle-button"
+          onClick={toggleMusic}
+          aria-label={playing ? "Jeda musik" : "Putar musik"}
+        >
+          {playing ? <Volume2 size={18} /> : <VolumeX size={18} />}
+        </button>
       </nav>
 
       <main id="home">
@@ -674,11 +684,22 @@ const Home = () => {
 
       <audio
         ref={audioRef}
-        src={activeMusicUrl || undefined}
+        src={activeMusicUrl || DEFAULT_MUSIC}
         loop
         preload="auto"
         onPlay={() => setPlaying(true)}
         onPause={() => setPlaying(false)}
+        onError={(e) => {
+          console.warn("Audio load error, fallback to default music:", e);
+          if (!audioError) {
+            setAudioError(true);
+            setTimeout(() => {
+              if (opened && audioRef.current) {
+                audioRef.current.play().then(() => setPlaying(true)).catch(() => {});
+              }
+            }, 300);
+          }
+        }}
       />
 
       <AnimatePresence>
