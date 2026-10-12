@@ -6,8 +6,8 @@ import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion"
 import { ArrowDown, BadgeCheck, CalendarDays, Check, ChevronDown, Clock3, Copy, Download, ExternalLink, Gift, Heart, Image as ImageIcon, Lock, MapPin, Music2, Send, Share2, Sparkles, Upload, Users, Volume2, VolumeX, X } from "lucide-react";
 import { MaskLine, Reveal, Tilt } from "./components/motion";
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "";
+const API = BACKEND_URL ? `${BACKEND_URL}/api` : "/api";
 
 const photos = [
   "https://customer-assets-4nw71qhi.emergentagent.net/job_e21eee82-41e5-497d-bbbb-3af56464b787/artifacts/5u3915fl_WhatsApp%20Image%202026-10-06%20at%2012.34.26%20%282%29.jpeg",
@@ -61,11 +61,15 @@ const Home = () => {
   const invitedName = params.get("to") || "";
   const [opened, setOpened] = useState(false);
   const [guest, setGuest] = useState(invitedName);
-  const [token, setToken] = useState(sessionStorage.getItem("mempelai-token") || "");
+  const [token, setToken] = useState(() => {
+    try { return sessionStorage.getItem("mempelai-token") || ""; } catch { return ""; }
+  });
   const [pin, setPin] = useState("");
   const [pinError, setPinError] = useState("");
   const [music, setMusic] = useState({ url: null, filename: null });
-  const [localUrl, setLocalUrl] = useState(localStorage.getItem("lira-febi-music") || "");
+  const [localUrl, setLocalUrl] = useState(() => {
+    try { return localStorage.getItem("lira-febi-music") || ""; } catch { return ""; }
+  });
   const [playing, setPlaying] = useState(false);
   const [lightbox, setLightbox] = useState(null);
   const [wishes, setWishes] = useState([]);
