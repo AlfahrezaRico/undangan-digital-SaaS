@@ -158,7 +158,8 @@ const Home = () => {
 
   const shareText = useMemo(() => {
     const link = guest ? `${window.location.origin}${window.location.pathname}?to=${encodeURIComponent(guest)}` : window.location.href;
-    return `Dengan penuh sukacita, kami mengundang ${guest || "Bapak/Ibu/Saudara/i"} untuk hadir di pernikahan Lira & Febi pada 01 November 2026. Lihat undangan: ${link}`;
+    const recipient = guest || "Bapak/Ibu/Saudara/i";
+    return `Assalamu’alaikum Wr. Wb\nBismillahirrahmanirrahim.\n\nYth. ${recipient},\n⠀\nTanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i, teman sekaligus sahabat, untuk menghadiri acara pernikahan kami:\n⠀\nLira Nuraulia Asdwiningtyas & Febi Herlis Setiawan\nBerikut link undangan kami untuk info lengkap dari acara bisa kunjungi:\n${link}\n\nMerupakan suatu kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan untuk hadir dan memberikan doa restu.\n\nMohon maaf perihal undangan hanya dibagikan melalui pesan ini. Terima kasih banyak atas perhatiannya.\n⠀\nWassalamu’alaikum Wr. Wb.\nTerima Kasih.`;
   }, [guest]);
 
   const openInvitation = () => {
