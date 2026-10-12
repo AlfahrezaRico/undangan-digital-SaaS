@@ -93,7 +93,15 @@ const Home = () => {
   const heroImgY = useTransform(scrollYProgress, [0, 1], [0, 120]);
   const heroCopyY = useTransform(scrollYProgress, [0, 1], [0, -70]);
 
-  const activeMusicUrl = music.url ? `${BACKEND_URL}${music.url}` : localUrl;
+  const DEFAULT_MUSIC = "/audio/wedding-song.mp3";
+  const activeMusicUrl = useMemo(() => {
+    const raw = music?.url || localUrl || DEFAULT_MUSIC;
+    if (!raw) return "";
+    if (raw.startsWith("data:") || raw.startsWith("http://") || raw.startsWith("https://") || raw.startsWith("/")) {
+      return raw;
+    }
+    return BACKEND_URL ? `${BACKEND_URL}${raw}` : raw;
+  }, [music?.url, localUrl]);
 
   useEffect(() => {
     const lenis = new Lenis({ duration: 1.15, smoothWheel: true });
@@ -143,7 +151,11 @@ const Home = () => {
 
   const openInvitation = () => {
     setOpened(true);
-    setTimeout(() => { audioRef.current?.play().catch(() => {}); }, 400);
+    if (audioRef.current) {
+      audioRef.current.play().catch(err => {
+        console.warn("Autoplay was prevented by browser:", err);
+      });
+    }
   };
   const toggleMusic = () => {
     if (!audioRef.current || !activeMusicUrl) return;
@@ -250,8 +262,16 @@ const Home = () => {
   const uploadMusic = async (e) => {
     const f = e.target.files?.[0];
     if (!f) return;
-    if (f.size > 15 * 1024 * 1024) {
-      setUploadMsg("Ukuran file terlalu besar (maksimal 15MB). Anda juga bisa menempelkan link audio di bawah.");
+    if (f.size > 3.5 * 1024 * 1024) {
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        const dataUrl = ev.target.result;
+        setMusic({ url: dataUrl, filename: f.name });
+        try { localStorage.setItem("lira-febi-music", dataUrl); } catch {}
+        setUploadMsg(`File >3.5MB aktif di perangkat ini: ${f.name}. Untuk tersimpan permanen di semua tamu, gunakan file MP3 <3.5MB atau tautkan URL audio.`);
+        setTimeout(() => audioRef.current?.play().catch(() => {}), 300);
+      };
+      reader.readAsDataURL(f);
       return;
     }
     setUploading(true);
@@ -594,7 +614,14 @@ const Home = () => {
         </div>
       </footer>
 
-      {activeMusicUrl && <audio ref={audioRef} src={activeMusicUrl} loop onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} />}
+      <audio
+        ref={audioRef}
+        src={activeMusicUrl || undefined}
+        loop
+        preload="auto"
+        onPlay={() => setPlaying(true)}
+        onPause={() => setPlaying(false)}
+      />
 
       <AnimatePresence>
         {giftOpen && (
