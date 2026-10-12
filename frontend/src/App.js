@@ -290,21 +290,24 @@ const Home = () => {
 
     if (selectedMusicFile) {
       const f = selectedMusicFile;
+      if (f.size > 3.5 * 1024 * 1024) {
+        setSavingMusic(false);
+        setUploadMsg(`File "${f.name}" berukuran ${(f.size / (1024 * 1024)).toFixed(2)} MB (melebihi batas server 3.5MB). Harap gunakan file MP3 di bawah 3.5MB atau tempelkan link URL audio di kolom bawah agar dapat tersimpan permanen untuk semua tamu.`);
+        return;
+      }
       const reader = new FileReader();
       reader.onload = async (ev) => {
         const dataUrl = ev.target.result;
         try {
-          if (f.size <= 3.5 * 1024 * 1024) {
-            await axios.post(`${API}/music`, { url: dataUrl, filename: f.name });
-          }
+          await axios.post(`${API}/music`, { url: dataUrl, filename: f.name });
           setMusic({ url: dataUrl, filename: f.name });
           try { localStorage.setItem("lira-febi-music", dataUrl); } catch {}
-          setUploadMsg(`Musik "${f.name}" berhasil disimpan!`);
+          setUploadMsg(`Musik "${f.name}" berhasil disimpan ke database!`);
           setTimeout(() => audioRef.current?.play().catch(() => {}), 300);
         } catch (err) {
           setMusic({ url: dataUrl, filename: f.name });
           try { localStorage.setItem("lira-febi-music", dataUrl); } catch {}
-          setUploadMsg(`Musik tersimpan di perangkat ini: ${f.name}`);
+          setUploadMsg(err.response?.data?.detail || `Gagal menyimpan ke server: ${f.name}`);
         }
         setSavingMusic(false);
       };

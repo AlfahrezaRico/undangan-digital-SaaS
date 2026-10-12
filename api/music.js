@@ -21,8 +21,10 @@ module.exports = async function handler(req, res) {
     }
     try {
       const rows = await sql`SELECT value FROM settings WHERE key = 'wedding_music' LIMIT 1`;
+      const nameRows = await sql`SELECT value FROM settings WHERE key = 'wedding_music_filename' LIMIT 1`;
       if (rows && rows.length && rows[0].value) {
-        return res.status(200).json({ url: rows[0].value, filename: 'Lagu Pernikahan' });
+        const fname = (nameRows && nameRows.length && nameRows[0].value) ? nameRows[0].value : 'Lagu Pernikahan';
+        return res.status(200).json({ url: rows[0].value, filename: fname });
       }
       return res.status(200).json({ url: null, filename: null });
     } catch (err) {
@@ -37,8 +39,10 @@ module.exports = async function handler(req, res) {
       return res.status(400).json({ detail: 'URL atau data audio diperlukan' });
     }
 
+    const songTitle = filename || 'Lagu Pernikahan';
+
     if (!sql) {
-      return res.status(200).json({ url, filename: filename || 'Lagu Pernikahan' });
+      return res.status(200).json({ url, filename: songTitle });
     }
 
     try {
@@ -47,7 +51,12 @@ module.exports = async function handler(req, res) {
         VALUES ('wedding_music', ${url})
         ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value
       `;
-      return res.status(200).json({ url, filename: filename || 'Lagu Pernikahan' });
+      await sql`
+        INSERT INTO settings (key, value)
+        VALUES ('wedding_music_filename', ${songTitle})
+        ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value
+      `;
+      return res.status(200).json({ url, filename: songTitle });
     } catch (err) {
       console.error('Error saving music:', err);
       return res.status(500).json({ detail: 'Gagal menyimpan musik ke database' });
