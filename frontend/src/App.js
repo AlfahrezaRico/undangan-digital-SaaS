@@ -32,7 +32,7 @@ const banks = [
   { id: "bca", bank: "BCA", number: "7651 935 320", name: "Febi Herlis Setiawan" },
 ];
 
-const GCAL_URL = "https://calendar.google.com/calendar/render?action=TEMPLATE&text=Pernikahan%20Lira%20%26%20Febi&dates=20261101T020000Z/20261101T100000Z&details=Akad%20Nikah%2009.00%20WIB%20-%20selesai%2C%20dilanjutkan%20Resepsi%2013.00%20-%2017.00%20WIB&location=Balai%20Sarmili%2C%20Depok";
+const GCAL_URL = "https://calendar.google.com/calendar/render?action=TEMPLATE&text=Pernikahan%20Lira%20%26%20Febi&dates=20261101T020000Z/20261101T090000Z&details=Akad%20Nikah%2009.00%20WIB%20-%20selesai%2C%20dilanjutkan%20Resepsi%2013.00%20-%2016.00%20WIB&location=Balai%20Sarmili%2C%20Depok";
 
 const GoldFlowers = () => {
   const petals = useMemo(() => Array.from({ length: 14 }, (_, i) => ({
@@ -98,13 +98,22 @@ const Home = () => {
 
   const activeMusicUrl = useMemo(() => {
     if (audioError) return DEFAULT_MUSIC;
-    const raw = music?.url || localUrl || DEFAULT_MUSIC;
+    const raw = music?.url || (localUrl && !music?.url ? localUrl : "") || DEFAULT_MUSIC;
     if (!raw) return DEFAULT_MUSIC;
     if (raw.startsWith("data:") || raw.startsWith("http://") || raw.startsWith("https://") || raw.startsWith("/")) {
       return raw;
     }
     return BACKEND_URL ? `${BACKEND_URL}${raw}` : raw;
   }, [music?.url, localUrl, audioError]);
+
+  useEffect(() => {
+    if (audioRef.current && activeMusicUrl) {
+      audioRef.current.load();
+      if (opened) {
+        audioRef.current.play().then(() => setPlaying(true)).catch(() => {});
+      }
+    }
+  }, [activeMusicUrl, opened]);
 
   useEffect(() => {
     const lenis = new Lenis({ duration: 1.15, smoothWheel: true });
@@ -342,7 +351,7 @@ const Home = () => {
     setUploadMsg("Pilih file audio atau masukkan tautan musik terlebih dahulu.");
   };
   const downloadICS = () => {
-    const ics = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//LiraFebi//Undangan//ID", "BEGIN:VEVENT", "UID:lira-febi-2026@undangan", "DTSTAMP:20260701T000000Z", "DTSTART:20261101T020000Z", "DTEND:20261101T100000Z", "SUMMARY:Pernikahan Lira & Febi", "DESCRIPTION:Akad Nikah 09.00 WIB - selesai\\, dilanjutkan Resepsi 13.00 - 17.00 WIB", "LOCATION:Balai Sarmili\\, Depok", "END:VEVENT", "END:VCALENDAR"].join("\r\n");
+    const ics = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//LiraFebi//Undangan//ID", "BEGIN:VEVENT", "UID:lira-febi-2026@undangan", "DTSTAMP:20260701T000000Z", "DTSTART:20261101T020000Z", "DTEND:20261101T090000Z", "SUMMARY:Pernikahan Lira & Febi", "DESCRIPTION:Akad Nikah 09.00 WIB - selesai\\, dilanjutkan Resepsi 13.00 - 16.00 WIB", "LOCATION:Balai Sarmili\\, Depok", "END:VEVENT", "END:VCALENDAR"].join("\r\n");
     const blob = new Blob([ics], { type: "text/calendar" });
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
@@ -434,7 +443,7 @@ const Home = () => {
           <div className="marquee-track">
             {[0, 1].map(n => (
               <div className="marquee-group" key={n}>
-                <span>LIRA <i>&</i> FEBI</span><b>✦</b><span>01 NOVEMBER 2026</span><b>✦</b><span>BALAI SARMILI · DEPOK</span><b>✦</b><span>ASSALAMU'ALAIKUM</span><b>✦</b><span>AKAD 09.00 WIB — SELESAI</span><b>✦</b><span>RESEPSI 13.00 — 17.00 WIB</span><b>✦</b>
+                <span>LIRA <i>&</i> FEBI</span><b>✦</b><span>01 NOVEMBER 2026</span><b>✦</b><span>BALAI SARMILI · DEPOK</span><b>✦</b><span>ASSALAMU'ALAIKUM</span><b>✦</b><span>AKAD 09.00 WIB — SELESAI</span><b>✦</b><span>RESEPSI 13.00 — 16.00 WIB</span><b>✦</b>
               </div>
             ))}
           </div>
@@ -493,7 +502,7 @@ const Home = () => {
           </div>
           <div className="event-grid">
             <Reveal><Tilt intensity={7} className="schedule-card" data-testid="akad-card"><span className="event-number">01</span><Clock3 /><h3>Akad Nikah</h3><p>09.00 WIB — selesai</p><div className="thin-line" /><span className="event-label">BALAI SARMILI, DEPOK</span></Tilt></Reveal>
-            <Reveal delay={0.12}><Tilt intensity={7} className="schedule-card featured" data-testid="resepsi-card"><span className="event-number">02</span><Sparkles /><h3>Resepsi</h3><p>13.00 — 17.00 WIB</p><div className="thin-line" /><span className="event-label">BALAI SARMILI, DEPOK</span></Tilt></Reveal>
+            <Reveal delay={0.12}><Tilt intensity={7} className="schedule-card featured" data-testid="resepsi-card"><span className="event-number">02</span><Sparkles /><h3>Resepsi</h3><p>13.00 — 16.00 WIB</p><div className="thin-line" /><span className="event-label">BALAI SARMILI, DEPOK</span></Tilt></Reveal>
           </div>
           <div className="event-actions">
             <a className="map-link" href="https://maps.app.goo.gl/yNbbxjNhwcBPoaVZ7?g_st=ic" target="_blank" rel="noreferrer" data-testid="maps-link"><MapPin size={17} /> Buka petunjuk lokasi <ExternalLink size={14} /></a>
