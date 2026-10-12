@@ -105,10 +105,16 @@ const Home = () => {
     if (opened) lenisRef.current.start(); else lenisRef.current.stop();
   }, [opened]);
 
-  const fetchSummary = () => axios.get(`${API}/rsvp-summary`).then(r => setSummary(r.data)).catch(() => {});
+  const fetchSummary = () => axios.get(`${API}/rsvp-summary`).then(r => {
+    if (r.data && typeof r.data === "object" && typeof r.data.total === "number") setSummary(r.data);
+  }).catch(() => {});
   useEffect(() => {
-    axios.get(`${API}/wishes`).then(r => setWishes(r.data)).catch(() => {});
-    axios.get(`${API}/music`).then(r => { if (r.data?.url) setMusic(r.data); }).catch(() => {});
+    axios.get(`${API}/wishes`).then(r => {
+      if (Array.isArray(r.data)) setWishes(r.data);
+    }).catch(() => {});
+    axios.get(`${API}/music`).then(r => {
+      if (r.data && typeof r.data === "object" && r.data.url) setMusic(r.data);
+    }).catch(() => {});
     fetchSummary();
   }, []);
 
@@ -141,10 +147,19 @@ const Home = () => {
     if (!wish.name || !wish.message) return;
     try {
       const r = await axios.post(`${API}/wishes`, wish);
-      setWishes([r.data, ...wishes]);
+      if (r.data && typeof r.data === "object" && r.data.id) {
+        setWishes(prev => [r.data, ...(Array.isArray(prev) ? prev : [])]);
+      } else {
+        const fallback = { id: String(Date.now()), name: wish.name, message: wish.message, attendance: wish.attendance };
+        setWishes(prev => [fallback, ...(Array.isArray(prev) ? prev : [])]);
+      }
       setWish({ name: "", message: "", attendance: "Hadir" });
       fetchSummary();
-    } catch (_) {}
+    } catch (_) {
+      const fallback = { id: String(Date.now()), name: wish.name, message: wish.message, attendance: wish.attendance };
+      setWishes(prev => [fallback, ...(Array.isArray(prev) ? prev : [])]);
+      setWish({ name: "", message: "", attendance: "Hadir" });
+    }
   };
   const shareWhatsApp = () => window.open(`https://wa.me/?text=${encodeURIComponent(shareText)}`, "_blank");
   const copyLink = async () => {
@@ -404,7 +419,7 @@ const Home = () => {
             </Reveal>
             <Reveal delay={0.15}>
               <div className="wish-list">
-                {wishes.length ? wishes.slice(0, 4).map(w => <article key={w.id} data-testid="wish-card"><div><strong>{w.name}</strong><span>{w.attendance}</span></div><p>{w.message}</p></article>) : <div className="empty-wishes"><Heart size={25} /><p>Jadilah yang pertama<br />mengirimkan doa untuk kami.</p></div>}
+                {Array.isArray(wishes) && wishes.length ? wishes.slice(0, 4).map(w => <article key={w.id} data-testid="wish-card"><div><strong>{w.name}</strong><span>{w.attendance}</span></div><p>{w.message}</p></article>) : <div className="empty-wishes"><Heart size={25} /><p>Jadilah yang pertama<br />mengirimkan doa untuk kami.</p></div>}
               </div>
             </Reveal>
           </div>
@@ -452,7 +467,7 @@ const Home = () => {
             </div>
             <div className="rsvp-list-card" data-testid="rsvp-list">
               <strong>Daftar respons tamu</strong>
-              {wishes.length ? (
+              {Array.isArray(wishes) && wishes.length ? (
                 <ul>
                   {wishes.map(w => (
                     <li key={w.id} data-testid="rsvp-list-item">
