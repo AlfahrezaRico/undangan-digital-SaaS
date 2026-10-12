@@ -158,8 +158,27 @@ const Home = () => {
 
   const shareText = useMemo(() => {
     const link = guest ? `${window.location.origin}${window.location.pathname}?to=${encodeURIComponent(guest)}` : window.location.href;
-    const recipient = guest || "Bapak/Ibu/Saudara/i";
-    return `Assalamu’alaikum Wr. Wb\nBismillahirrahmanirrahim.\n\nYth. ${recipient},\n⠀\nTanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i, teman sekaligus sahabat, untuk menghadiri acara pernikahan kami:\n⠀\nLira Nuraulia Asdwiningtyas & Febi Herlis Setiawan\nBerikut link undangan kami untuk info lengkap dari acara bisa kunjungi:\n${link}\n\nMerupakan suatu kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan untuk hadir dan memberikan doa restu.\n\nMohon maaf perihal undangan hanya dibagikan melalui pesan ini. Terima kasih banyak atas perhatiannya.\n⠀\nWassalamu’alaikum Wr. Wb.\nTerima Kasih.`;
+    const recipient = guest ? `*${guest}*` : "Bapak/Ibu/Saudara/i";
+    return [
+      "Assalamu’alaikum Wr. Wb.",
+      "Bismillahirrahmanirrahim.",
+      "",
+      `Yth. ${recipient},`,
+      "",
+      "Tanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i, teman sekaligus sahabat, untuk menghadiri acara pernikahan kami:",
+      "",
+      "*Lira Nuraulia Asdwiningtyas & Febi Herlis Setiawan*",
+      "",
+      "Berikut tautan undangan kami untuk informasi lengkap acara:",
+      link,
+      "",
+      "Merupakan suatu kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan untuk hadir dan memberikan doa restu.",
+      "",
+      "Mohon maaf perihal undangan hanya dibagikan melalui pesan ini. Terima kasih banyak atas perhatiannya.",
+      "",
+      "Wassalamu’alaikum Wr. Wb.",
+      "Terima Kasih."
+    ].join("\n");
   }, [guest]);
 
   const openInvitation = () => {
