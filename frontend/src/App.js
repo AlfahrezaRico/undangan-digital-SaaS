@@ -591,8 +591,48 @@ const Home = () => {
               </form>
             </Reveal>
             <Reveal delay={0.15}>
-              <div className="wish-list">
-                {Array.isArray(wishes) && wishes.length ? wishes.slice(0, 4).map(w => <article key={w.id} data-testid="wish-card"><div><strong>{w.name}</strong><span>{w.attendance}</span></div><p>{w.message}</p></article>) : <div className="empty-wishes"><Heart size={25} /><p>Jadilah yang pertama<br />mengirimkan doa untuk kami.</p></div>}
+              <div className="wish-list-wrapper">
+                <div className="wish-list-header">
+                  <span className="wish-list-count">
+                    <Heart size={14} className="gold-icon" /> {Array.isArray(wishes) ? wishes.length : 0} Doa & Ucapan Hangat
+                  </span>
+                  <span className="wish-list-hint">Gulir untuk melihat semua ↓</span>
+                </div>
+                <div className="wish-list" data-lenis-prevent="true">
+                  {Array.isArray(wishes) && wishes.length ? (
+                    wishes.map((w, idx) => (
+                      <article key={w.id || idx} data-testid="wish-card" className="wish-item-card">
+                        <div className="wish-item-top">
+                          <div className="wish-author">
+                            <span className="wish-avatar" aria-hidden="true">
+                              {(w.name || "T").trim().charAt(0).toUpperCase()}
+                            </span>
+                            <div className="wish-author-info">
+                              <strong className="wish-author-name">{w.name}</strong>
+                              {w.created_at && (
+                                <span className="wish-date">
+                                  {new Date(w.created_at).toLocaleDateString("id-ID", {
+                                    day: "numeric",
+                                    month: "short"
+                                  })}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                          <span className={`wish-pill ${w.attendance === "Berhalangan hadir" || w.attendance === "Berhalangan" ? "no" : "yes"}`}>
+                            {w.attendance === "Berhalangan hadir" || w.attendance === "Berhalangan" ? "Berhalangan" : "Hadir"}
+                          </span>
+                        </div>
+                        <p className="wish-text">{w.message}</p>
+                      </article>
+                    ))
+                  ) : (
+                    <div className="empty-wishes">
+                      <Heart size={25} />
+                      <p>Jadilah yang pertama<br />mengirimkan doa untuk kami.</p>
+                    </div>
+                  )}
+                </div>
               </div>
             </Reveal>
           </div>
