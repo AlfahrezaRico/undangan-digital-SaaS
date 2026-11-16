@@ -9,30 +9,21 @@ import { MaskLine, Reveal, Tilt } from "./components/motion";
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "";
 const API = BACKEND_URL ? `${BACKEND_URL}/api` : "/api";
 
-const photos = [
-  "https://customer-assets-4nw71qhi.emergentagent.net/job_e21eee82-41e5-497d-bbbb-3af56464b787/artifacts/5u3915fl_WhatsApp%20Image%202026-10-06%20at%2012.34.26%20%282%29.jpeg",
-  "https://customer-assets-4nw71qhi.emergentagent.net/job_e21eee82-41e5-497d-bbbb-3af56464b787/artifacts/k84z72zq_WhatsApp%20Image%202026-10-06%20at%2012.34.26%20%281%29.jpeg",
-  "https://customer-assets-4nw71qhi.emergentagent.net/job_e21eee82-41e5-497d-bbbb-3af56464b787/artifacts/vmrzlpkx_WhatsApp%20Image%202026-10-06%20at%2012.34.25.jpeg",
-  "https://customer-assets-4nw71qhi.emergentagent.net/job_e21eee82-41e5-497d-bbbb-3af56464b787/artifacts/5lhyj9rx_WhatsApp%20Image%202026-10-06%20at%2012.34.25%20%283%29.jpeg",
-  "https://customer-assets-4nw71qhi.emergentagent.net/job_e21eee82-41e5-497d-bbbb-3af56464b787/artifacts/dfhzkerh_WhatsApp%20Image%202026-10-06%20at%2012.34.26%20%283%29.jpeg",
-  "/photos/momen-6.jpg",
-  "/photos/momen-7.jpg",
-  "/photos/momen-8.png",
-];
+const photos = [];
 
 const story = [
   { year: "MASA SEKOLAH", title: "Berjalan Sejajar", text: "Di bawah naungan sekolah yang sama, keduanya pernah berjalan sejajar tanpa saling menyapa, hingga takdir membawa mereka menempuh jalan masing-masing." },
   { year: "02 JULI 2026", title: "Dipertemukan Kembali", text: "Semesta mempertemukan mereka kembali. Lewat perkenalan yang lebih dalam, keduanya tersadar bahwa masa lalu hanyalah cara Tuhan menyiapkan waktu terbaik untuk saling menemukan." },
-  { year: "03 OKTOBER 2026", title: "Sebuah Pinangan", text: "Berbekal ketulusan dan restu yang luruh dari doa orang tua, Febi meminta Lira menjadi teman sehidup sematinya. Air mata haru menyambut kesungguhan itu, mengikat dua hati dalam kepastian." },
+  { year: "03 OKTOBER 2026", title: "Sebuah Pinangan", text: "Berbekal ketulusan dan restu yang luruh dari doa orang tua, Febi (Febong) meminta Lira menjadi teman sehidup sematinya. Air mata haru menyambut kesungguhan itu, mengikat dua hati dalam kepastian." },
   { year: "01 NOVEMBER 2026", title: "Selamanya", text: "Kini, seluruh rindu dan penantian panjang itu bermuara pada satu hari yang paling dinanti: melangkah bersama menuju ikatan suci, merajut janji di hadapan-Nya untuk saling menggenggam selamanya." },
 ];
 
 const banks = [
-  { id: "mandiri", bank: "MANDIRI", number: "6001 2941 203", name: "Lira Nuraulia Asdwiningtyas" },
   { id: "bca", bank: "BCA", number: "7651 935 320", name: "Febi Herlis Setiawan" },
+  { id: "mandiri", bank: "MANDIRI", number: "6001 2941 203", name: "Lira Nuraulia Asdwiningtyas" },
 ];
 
-const GCAL_URL = "https://calendar.google.com/calendar/render?action=TEMPLATE&text=Ngunduh%20Mantu%20Lira%20%26%20Febi&dates=20261128T040000Z/20261128T100000Z&details=Resepsi%20Ngunduh%20Mantu%20Lira%20%26%20Febi%0AWaktu%3A%2011.00%20WIB%20-%20Selesai%0ALokasi%3A%20Kediaman%20Mempelai%20Pria%0AAlamat%3A%20No.%20A1%2C%20RT.5%2FRW.1%2C%20Lingk.%20Cipayung%2C%20Abadi%20Jaya&location=No.%20A1%2C%20RT.5%2FRW.1%2C%20Lingk.%20Cipayung%2C%20Abadi%20Jaya%2C%20Depok";
+const GCAL_URL = "https://calendar.google.com/calendar/render?action=TEMPLATE&text=Ngunduh%20Mantu%20Febi%20(Febong)%20%26%20Lira&dates=20261128T040000Z/20261128T100000Z&details=Resepsi%20Ngunduh%20Mantu%20Febi%20(Febong)%20%26%20Lira%0AWaktu%3A%2011.00%20WIB%20-%20Selesai%0ALokasi%3A%20Kediaman%20Mempelai%20Pria%0AAlamat%3A%20No.%20A1%2C%20RT.5%2FRW.1%2C%20Lingk.%20Cipayung%2C%20Abadi%20Jaya&location=No.%20A1%2C%20RT.5%2FRW.1%2C%20Lingk.%20Cipayung%2C%20Abadi%20Jaya%2C%20Depok";
 
 const GoldFlowers = () => {
   const petals = useMemo(() => Array.from({ length: 14 }, (_, i) => ({
@@ -167,7 +158,7 @@ const Home = () => {
       "",
       "Tanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i, teman sekaligus sahabat, untuk menghadiri acara pernikahan kami:",
       "",
-      "*Lira Nuraulia Asdwiningtyas & Febi Herlis Setiawan*",
+      "*Febi (Febong) Herlis Setiawan & Lira Nuraulia Asdwiningtyas*",
       "",
       "Berikut tautan undangan kami untuk informasi lengkap acara:",
       link,
@@ -380,7 +371,7 @@ const Home = () => {
       "DTSTAMP:20260701T000000Z",
       "DTSTART:20261128T040000Z",
       "DTEND:20261128T100000Z",
-      "SUMMARY:Ngunduh Mantu Lira & Febi",
+      "SUMMARY:Ngunduh Mantu Febi (Febong) & Lira",
       "DESCRIPTION:Resepsi Ngunduh Mantu 11.00 WIB - Selesai\\, Kediaman Mempelai Pria",
       "LOCATION:No. A1\\, RT.5/RW.1\\, Lingk. Cipayung\\, Abadi Jaya\\, Depok",
       "END:VEVENT",
@@ -389,7 +380,7 @@ const Home = () => {
     const blob = new Blob([ics], { type: "text/calendar" });
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = "Ngunduh-Mantu-Lira-Febi.ics";
+    a.download = "Ngunduh-Mantu-Febi-Lira.ics";
     a.click();
     URL.revokeObjectURL(a.href);
   };
@@ -414,7 +405,7 @@ const Home = () => {
               <p className="eyebrow">UNDANGAN NGUNDUH MANTU</p>
               <div className="ornament">✦</div>
               <p className="cover-script">The wedding & reception of</p>
-              <h1>Lira <span>&</span> Febi</h1>
+              <h1>Febi (Febong) <span>&</span> Lira</h1>
               <p className="cover-date">SABTU · 28 · 11 · 2026</p>
               {invitedName ? (
                 <p className="cover-guest" data-testid="cover-guest-name">Kepada Yth.<br /><strong>{invitedName}</strong></p>
@@ -432,12 +423,12 @@ const Home = () => {
       </AnimatePresence>
 
       <nav className="topbar">
-        <a href="#home" className="brand" data-testid="brand-link" onClick={e => go(e, "#home")}>L<span>&</span>F</a>
+        <a href="#home" className="brand" data-testid="brand-link" onClick={e => go(e, "#home")}>F<span>&</span>L</a>
         <div className="navlinks">
           <a href="#couple" data-testid="nav-couple-link" onClick={e => go(e, "#couple")}>Mempelai</a>
           <a href="#story" data-testid="nav-story-link" onClick={e => go(e, "#story")}>Cerita</a>
           <a href="#event" data-testid="nav-event-link" onClick={e => go(e, "#event")}>Acara</a>
-          <a href="#gallery" data-testid="nav-gallery-link" onClick={e => go(e, "#gallery")}>Galeri</a>
+          {allPhotos.length > 0 && <a href="#gallery" data-testid="nav-gallery-link" onClick={e => go(e, "#gallery")}>Galeri</a>}
         </div>
         <button
           className="icon-button"
@@ -458,26 +449,46 @@ const Home = () => {
             <div className="gold-rule" />
             <p className="script"><MaskLine show={opened} delay={0.25}>A celebration of love</MaskLine></p>
             <h1>
-              <MaskLine show={opened} delay={0.4}>Lira <i>&</i></MaskLine>
-              <MaskLine show={opened} delay={0.55}>Febi</MaskLine>
+              <MaskLine show={opened} delay={0.4}>Febi (Febong) <i>&</i></MaskLine>
+              <MaskLine show={opened} delay={0.55}>Lira</MaskLine>
             </h1>
             <p className="hero-date">28 NOVEMBER 2026 <span>·</span> KEDIAMAN MEMPELAI PRIA, DEPOK</p>
             <a className="scroll-hint" href="#couple" data-testid="hero-scroll-link" onClick={e => go(e, "#couple")}><span>SCROLL TO EXPLORE</span><ChevronDown size={16} /></a>
           </motion.div>
           <motion.div className="hero-image" style={{ y: heroImgY }}>
             <Tilt intensity={6}>
-              <img data-testid="hero-couple-image" src="/photos/hero.jpg" alt="Lira dan Febi mengenakan busana adat Bali" />
+              <div className="hero-crest-card" data-testid="hero-crest-card">
+                <div className="crest-border">
+                  <div className="crest-corner top-left">✦</div>
+                  <div className="crest-corner top-right">✦</div>
+                  <div className="crest-corner bottom-left">✦</div>
+                  <div className="crest-corner bottom-right">✦</div>
+                  
+                  <span className="crest-bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</span>
+                  <div className="crest-monogram">
+                    <span>F</span>
+                    <span className="crest-amp">&</span>
+                    <span>L</span>
+                  </div>
+                  <h3 className="crest-title">Febi <i>&</i> Lira</h3>
+                  <p className="crest-nickname">( Febong )</p>
+                  <div className="thin-gold-line" />
+                  <p className="crest-badge">WALIMATUL 'URSY · NGUNDUH MANTU</p>
+                  <p className="crest-date">SABTU, 28 NOVEMBER 2026</p>
+                  <p className="crest-location">DEPOK, JAWA BARAT</p>
+                </div>
+              </div>
               <div className="image-frame" />
             </Tilt>
           </motion.div>
-          <div className="hero-stamp">L<span>&</span>F<br /><small>2026</small></div>
+          <div className="hero-stamp">F<span>&</span>L<br /><small>2026</small></div>
         </section>
 
         <div className="marquee" aria-hidden="true">
           <div className="marquee-track">
             {[0, 1].map(n => (
               <div className="marquee-group" key={n}>
-                <span>LIRA <i>&</i> FEBI</span><b>✦</b><span>28 NOVEMBER 2026</span><b>✦</b><span>KEDIAMAN MEMPELAI PRIA</span><b>✦</b><span>NGUNDUH MANTU</span><b>✦</b><span>AKAD 01 NOV 2026</span><b>✦</b><span>RESEPSI 11.00 WIB — SELESAI</span><b>✦</b>
+                <span>FEBI (FEBONG) <i>&</i> LIRA</span><b>✦</b><span>28 NOVEMBER 2026</span><b>✦</b><span>KEDIAMAN MEMPELAI PRIA</span><b>✦</b><span>NGUNDUH MANTU</span><b>✦</b><span>AKAD 01 NOV 2026</span><b>✦</b><span>RESEPSI 11.00 WIB — SELESAI</span><b>✦</b>
               </div>
             ))}
           </div>
@@ -490,9 +501,9 @@ const Home = () => {
             <Reveal delay={0.15}>
               <p className="body-copy">Assalamu'alaikum Warahmatullahi Wabarakatuh. Dengan memohon rahmat dan ridha Allah SWT, kami bermaksud mengundang Bapak/Ibu/Saudara/i untuk hadir dan memberikan doa restu pada hari bahagia kami.</p>
               <div className="couple-names">
-                <div><h3>Lira Nuraulia<br />Asdwiningtyas, S.Psi.</h3><p>Putri kedua<br />Bpk. Hadi Wiyono &<br />Ibu Ni Wayan Rindiasih</p></div>
+                <div><h3>Febi (Febong) Herlis<br />Setiawan, S.Ak.</h3><p>Putra kedua<br />Bpk. Heriyanto &<br />Ibu Liestari</p></div>
                 <div className="ampersand">&</div>
-                <div><h3>Febi Herlis<br />Setiawan, S.Ak.</h3><p>Putra kedua<br />Bpk. Heriyanto &<br />Ibu Liestari</p></div>
+                <div><h3>Lira Nuraulia<br />Asdwiningtyas, S.Psi.</h3><p>Putri kedua<br />Bpk. Hadi Wiyono &<br />Ibu Ni Wayan Rindiasih</p></div>
               </div>
             </Reveal>
           </div>
@@ -586,23 +597,25 @@ const Home = () => {
           </div>
         </section>
 
-        <section className="gallery section" id="gallery">
-          <Reveal className="section-kicker">04 / OUR MOMENTS</Reveal>
-          <div className="gallery-head">
-            <Reveal><p className="script gold-text">A little glimpse</p><h2>Frames of<br /><em>us.</em></h2></Reveal>
-            <Reveal delay={0.15}><p className="body-copy">Setiap foto menyimpan cerita. Terima kasih telah menjadi bagian dari babak baru dalam perjalanan kami.</p></Reveal>
-          </div>
-          <div className="gallery-grid">
-            {allPhotos.map((photo, i) => (
-              <Reveal key={photo} delay={0.06 * (i % 6)} className={`photo-wrap photo-${(i % 8) + 1}`}>
-                <Tilt intensity={9} className="photo" onClick={() => setLightbox(photo)} data-testid={`gallery-photo-${i + 1}`}>
-                  <img src={photo} alt={`Momen Lira dan Febi ${i + 1}`} />
-                  <span><ImageIcon size={15} /> Lihat</span>
-                </Tilt>
-              </Reveal>
-            ))}
-          </div>
-        </section>
+        {allPhotos.length > 0 && (
+          <section className="gallery section" id="gallery">
+            <Reveal className="section-kicker">04 / OUR MOMENTS</Reveal>
+            <div className="gallery-head">
+              <Reveal><p className="script gold-text">A little glimpse</p><h2>Frames of<br /><em>us.</em></h2></Reveal>
+              <Reveal delay={0.15}><p className="body-copy">Setiap foto menyimpan cerita. Terima kasih telah menjadi bagian dari babak baru dalam perjalanan kami.</p></Reveal>
+            </div>
+            <div className="gallery-grid">
+              {allPhotos.map((photo, i) => (
+                <Reveal key={photo} delay={0.06 * (i % 6)} className={`photo-wrap photo-${(i % 8) + 1}`}>
+                  <Tilt intensity={9} className="photo" onClick={() => setLightbox(photo)} data-testid={`gallery-photo-${i + 1}`}>
+                    <img src={photo} alt={`Momen Febi dan Lira ${i + 1}`} />
+                    <span><ImageIcon size={15} /> Lihat</span>
+                  </Tilt>
+                </Reveal>
+              ))}
+            </div>
+          </section>
+        )}
 
         <section className="videos section" id="videos">
           <Reveal className="section-kicker">05 / MOMENTS IN MOTION</Reveal>
@@ -796,8 +809,8 @@ const Home = () => {
       </main>
 
       <footer>
-        <div className="brand">L<span>&</span>F</div>
-        <p>Dengan cinta, Lira & Febi</p>
+        <div className="brand">F<span>&</span>L</div>
+        <p>Dengan cinta, Febi & Lira</p>
         <div className="footer-right">
           <span>28 · 11 · 2026</span>
           {!coupleMode && !invitedName && <a className="couple-link" href="?mode=mempelai" data-testid="couple-area-link"><Lock size={11} /> Area Mempelai</a>}

@@ -63,6 +63,23 @@ button,input,textarea,select{font:inherit}
 .hero-image{position:relative;max-width:520px;justify-self:end}
 .hero-image .tilt{position:relative}
 .hero-image img{display:block;position:relative;z-index:1;width:100%;aspect-ratio:3/4;object-fit:cover;object-position:center top;filter:saturate(.88)}
+.hero-crest-card{width:100%;aspect-ratio:3/4;background:radial-gradient(circle at 50% 30%, #2a1b18 0%, #151111 85%);border:1px solid #7d6527;padding:22px;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;z-index:1;box-shadow:0 15px 40px rgba(0,0,0,0.6)}
+.crest-border{width:100%;height:100%;border:1px solid #d4af3755;padding:26px 18px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;background:rgba(21,17,17,0.45)}
+.crest-corner{position:absolute;color:var(--gold);font-size:11px;line-height:1}
+.crest-corner.top-left{top:6px;left:6px}
+.crest-corner.top-right{top:6px;right:6px}
+.crest-corner.bottom-left{bottom:6px;left:6px}
+.crest-corner.bottom-right{bottom:6px;right:6px}
+.crest-bismillah{font-family:"Amiri", serif, system-ui;color:var(--gold);font-size:15px;letter-spacing:.05em;margin-bottom:12px;opacity:.92}
+.crest-monogram{display:flex;align-items:baseline;justify-content:center;gap:8px;font:500 54px/1 Cormorant Garamond, serif;color:var(--gold);margin:8px 0;text-shadow:0 0 25px rgba(212,175,55,0.3)}
+.crest-monogram .crest-amp{font-size:30px;font-style:italic;opacity:.8}
+.crest-title{font:500 26px/1.1 Cormorant Garamond, serif;color:var(--cream);margin:4px 0 2px}
+.crest-title i{font-style:italic;color:var(--gold)}
+.crest-nickname{font-size:12px;color:var(--gold);letter-spacing:.15em;font-weight:600;margin:0 0 10px;text-transform:uppercase}
+.thin-gold-line{width:45px;height:1px;background:linear-gradient(90deg,transparent,#d4af37,transparent);margin:10px 0}
+.crest-badge{font-size:8.5px;letter-spacing:.22em;font-weight:700;color:var(--gold);margin-bottom:6px}
+.crest-date{font-size:11px;letter-spacing:.15em;color:var(--cream);font-weight:500;margin-bottom:4px}
+.crest-location{font-size:9px;letter-spacing:.2em;color:var(--muted)}
 .image-frame{position:absolute;inset:20px -20px -20px 20px;border:1px solid var(--gold);opacity:.7}
 .hero-stamp{position:absolute;right:7vw;bottom:8vh;border:1px solid #a8872c;border-radius:50%;width:85px;height:85px;display:grid;place-items:center;text-align:center;color:var(--gold);font:600 22px Cormorant Garamond,serif;line-height:.7}
 .hero-stamp span{font-size:14px}
