@@ -32,7 +32,7 @@ const banks = [
   { id: "bca", bank: "BCA", number: "7651 935 320", name: "Febi Herlis Setiawan" },
 ];
 
-const GCAL_URL = "https://calendar.google.com/calendar/render?action=TEMPLATE&text=Pernikahan%20Lira%20%26%20Febi&dates=20261101T020000Z/20261101T090000Z&details=Akad%20Nikah%2009.00%20WIB%20-%20selesai%2C%20dilanjutkan%20Resepsi%2013.00%20-%2016.00%20WIB&location=Balai%20Sarmili%2C%20Depok";
+const GCAL_URL = "https://calendar.google.com/calendar/render?action=TEMPLATE&text=Ngunduh%20Mantu%20Lira%20%26%20Febi&dates=20261128T040000Z/20261128T100000Z&details=Resepsi%20Ngunduh%20Mantu%20Lira%20%26%20Febi%0AWaktu%3A%2011.00%20WIB%20-%20Selesai%0ALokasi%3A%20Kediaman%20Mempelai%20Pria%0AAlamat%3A%20No.%20A1%2C%20RT.5%2FRW.1%2C%20Lingk.%20Cipayung%2C%20Abadi%20Jaya&location=No.%20A1%2C%20RT.5%2FRW.1%2C%20Lingk.%20Cipayung%2C%20Abadi%20Jaya%2C%20Depok";
 
 const GoldFlowers = () => {
   const petals = useMemo(() => Array.from({ length: 14 }, (_, i) => ({
@@ -147,7 +147,7 @@ const Home = () => {
 
   useEffect(() => {
     const tick = () => {
-      const diff = new Date("2026-11-01T09:00:00+07:00") - new Date();
+      const diff = new Date("2026-11-28T11:00:00+07:00") - new Date();
       if (diff <= 0) return;
       setTime({ days: Math.floor(diff / 86400000), hours: Math.floor(diff / 3600000) % 24, minutes: Math.floor(diff / 60000) % 60, seconds: Math.floor(diff / 1000) % 60 });
     };
@@ -371,11 +371,25 @@ const Home = () => {
     setUploadMsg("Pilih file audio atau masukkan tautan musik terlebih dahulu.");
   };
   const downloadICS = () => {
-    const ics = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//LiraFebi//Undangan//ID", "BEGIN:VEVENT", "UID:lira-febi-2026@undangan", "DTSTAMP:20260701T000000Z", "DTSTART:20261101T020000Z", "DTEND:20261101T090000Z", "SUMMARY:Pernikahan Lira & Febi", "DESCRIPTION:Akad Nikah 09.00 WIB - selesai\\, dilanjutkan Resepsi 13.00 - 16.00 WIB", "LOCATION:Balai Sarmili\\, Depok", "END:VEVENT", "END:VCALENDAR"].join("\r\n");
+    const ics = [
+      "BEGIN:VCALENDAR",
+      "VERSION:2.0",
+      "PRODID:-//LiraFebi//UndanganNgunduhMantu//ID",
+      "BEGIN:VEVENT",
+      "UID:lira-febi-ngunduh-mantu-2026@undangan",
+      "DTSTAMP:20260701T000000Z",
+      "DTSTART:20261128T040000Z",
+      "DTEND:20261128T100000Z",
+      "SUMMARY:Ngunduh Mantu Lira & Febi",
+      "DESCRIPTION:Resepsi Ngunduh Mantu 11.00 WIB - Selesai\\, Kediaman Mempelai Pria",
+      "LOCATION:No. A1\\, RT.5/RW.1\\, Lingk. Cipayung\\, Abadi Jaya\\, Depok",
+      "END:VEVENT",
+      "END:VCALENDAR"
+    ].join("\r\n");
     const blob = new Blob([ics], { type: "text/calendar" });
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = "Pernikahan-Lira-Febi.ics";
+    a.download = "Ngunduh-Mantu-Lira-Febi.ics";
     a.click();
     URL.revokeObjectURL(a.href);
   };
@@ -397,11 +411,11 @@ const Home = () => {
           <motion.div className="cover" data-testid="invitation-cover" exit={{ opacity: 0, y: -70 }} transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}>
             <div className="cover-pattern" />
             <div className="cover-content">
-              <p className="eyebrow">UNDANGAN PERNIKAHAN</p>
+              <p className="eyebrow">UNDANGAN NGUNDUH MANTU</p>
               <div className="ornament">✦</div>
-              <p className="cover-script">The wedding of</p>
+              <p className="cover-script">The wedding & reception of</p>
               <h1>Lira <span>&</span> Febi</h1>
-              <p className="cover-date">MINGGU · 01 · 11 · 2026</p>
+              <p className="cover-date">SABTU · 28 · 11 · 2026</p>
               {invitedName ? (
                 <p className="cover-guest" data-testid="cover-guest-name">Kepada Yth.<br /><strong>{invitedName}</strong></p>
               ) : (
@@ -411,7 +425,7 @@ const Home = () => {
                 </>
               )}
               <button data-testid="open-invitation-button" className="gold-button" onClick={openInvitation}>Buka Undangan <ArrowDown size={16} /></button>
-              <p className="cover-note">Balai Sarmili, Depok</p>
+              <p className="cover-note">Kediaman Mempelai Pria · Abadi Jaya, Depok</p>
             </div>
           </motion.div>
         )}
@@ -447,7 +461,7 @@ const Home = () => {
               <MaskLine show={opened} delay={0.4}>Lira <i>&</i></MaskLine>
               <MaskLine show={opened} delay={0.55}>Febi</MaskLine>
             </h1>
-            <p className="hero-date">01 NOVEMBER 2026 <span>·</span> BALAI SARMILI, DEPOK</p>
+            <p className="hero-date">28 NOVEMBER 2026 <span>·</span> KEDIAMAN MEMPELAI PRIA, DEPOK</p>
             <a className="scroll-hint" href="#couple" data-testid="hero-scroll-link" onClick={e => go(e, "#couple")}><span>SCROLL TO EXPLORE</span><ChevronDown size={16} /></a>
           </motion.div>
           <motion.div className="hero-image" style={{ y: heroImgY }}>
@@ -463,7 +477,7 @@ const Home = () => {
           <div className="marquee-track">
             {[0, 1].map(n => (
               <div className="marquee-group" key={n}>
-                <span>LIRA <i>&</i> FEBI</span><b>✦</b><span>01 NOVEMBER 2026</span><b>✦</b><span>BALAI SARMILI · DEPOK</span><b>✦</b><span>ASSALAMU'ALAIKUM</span><b>✦</b><span>AKAD 09.00 WIB — SELESAI</span><b>✦</b><span>RESEPSI 13.00 — 16.00 WIB</span><b>✦</b>
+                <span>LIRA <i>&</i> FEBI</span><b>✦</b><span>28 NOVEMBER 2026</span><b>✦</b><span>KEDIAMAN MEMPELAI PRIA</span><b>✦</b><span>NGUNDUH MANTU</span><b>✦</b><span>AKAD 01 NOV 2026</span><b>✦</b><span>RESEPSI 11.00 WIB — SELESAI</span><b>✦</b>
               </div>
             ))}
           </div>
@@ -518,14 +532,53 @@ const Home = () => {
           <Reveal className="section-kicker">03 / THE DAY</Reveal>
           <div className="event-head">
             <Reveal><p className="script gold-text">Save the date</p><h2>Hari yang kami<br /><em>nantikan.</em></h2></Reveal>
-            <Reveal delay={0.15}><Tilt intensity={8} className="date-card"><CalendarDays size={23} /><strong>01</strong><span>NOVEMBER<br />2026</span></Tilt></Reveal>
+            <Reveal delay={0.15}><Tilt intensity={8} className="date-card"><CalendarDays size={23} /><strong>28</strong><span>NOVEMBER<br />2026</span></Tilt></Reveal>
           </div>
           <div className="event-grid">
-            <Reveal><Tilt intensity={7} className="schedule-card" data-testid="akad-card"><span className="event-number">01</span><Clock3 /><h3>Akad Nikah</h3><p>09.00 WIB — selesai</p><div className="thin-line" /><span className="event-label">BALAI SARMILI, DEPOK</span></Tilt></Reveal>
-            <Reveal delay={0.12}><Tilt intensity={7} className="schedule-card featured" data-testid="resepsi-card"><span className="event-number">02</span><Sparkles /><h3>Resepsi</h3><p>13.00 — 16.00 WIB</p><div className="thin-line" /><span className="event-label">BALAI SARMILI, DEPOK</span></Tilt></Reveal>
+            <Reveal>
+              <Tilt intensity={7} className="schedule-card" data-testid="akad-card">
+                <div>
+                  <span className="event-number">01</span>
+                  <Clock3 />
+                  <h3>Akad Nikah</h3>
+                  <div className="event-date-row">
+                    <CalendarDays size={13} /> <span>Minggu, 01 November 2026</span>
+                  </div>
+                  <p className="event-time">10.00 WIB — selesai</p>
+                </div>
+                <div>
+                  <div className="thin-line" />
+                  <span className="event-label">BALAI SARMILI, DEPOK</span>
+                  <a className="card-map-btn" href="https://maps.app.goo.gl/yNbbxjNhwcBPoaVZ7?g_st=ic" target="_blank" rel="noreferrer" data-testid="maps-link">
+                    <MapPin size={13} /> Petunjuk Lokasi <ExternalLink size={12} />
+                  </a>
+                </div>
+              </Tilt>
+            </Reveal>
+            <Reveal delay={0.12}>
+              <Tilt intensity={7} className="schedule-card featured" data-testid="resepsi-card">
+                <div>
+                  <span className="event-number">02</span>
+                  <Sparkles />
+                  <h3>Resepsi</h3>
+                  <span className="event-subbadge">NGUNDUH MANTU</span>
+                  <div className="event-date-row">
+                    <CalendarDays size={13} /> <span>Sabtu, 28 November 2026</span>
+                  </div>
+                  <p className="event-time">11.00 WIB — selesai</p>
+                </div>
+                <div>
+                  <div className="thin-line" />
+                  <span className="event-label">KEDIAMAN MEMPELAI PRIA</span>
+                  <p className="event-address">No. A1, RT.5/RW.1, Lingk. Cipayung, Abadi Jaya</p>
+                  <a className="card-map-btn featured-map-btn" href="https://maps.app.goo.gl/5uGzPzzrgr27tW6f8?g_st=ic" target="_blank" rel="noreferrer" data-testid="resepsi-maps-link">
+                    <MapPin size={13} /> Petunjuk Lokasi Kediaman <ExternalLink size={12} />
+                  </a>
+                </div>
+              </Tilt>
+            </Reveal>
           </div>
           <div className="event-actions">
-            <a className="map-link" href="https://maps.app.goo.gl/yNbbxjNhwcBPoaVZ7?g_st=ic" target="_blank" rel="noreferrer" data-testid="maps-link"><MapPin size={17} /> Buka petunjuk lokasi <ExternalLink size={14} /></a>
             <div className="calendar-actions">
               <a className="cal-button" href={GCAL_URL} target="_blank" rel="noreferrer" data-testid="calendar-google-link"><CalendarDays size={15} /> Simpan ke Google Kalender</a>
               <button className="cal-button ghost" onClick={downloadICS} data-testid="calendar-ics-button"><Download size={15} /> Unduh pengingat (.ics)</button>
@@ -746,7 +799,7 @@ const Home = () => {
         <div className="brand">L<span>&</span>F</div>
         <p>Dengan cinta, Lira & Febi</p>
         <div className="footer-right">
-          <span>01 · 11 · 2026</span>
+          <span>28 · 11 · 2026</span>
           {!coupleMode && !invitedName && <a className="couple-link" href="?mode=mempelai" data-testid="couple-area-link"><Lock size={11} /> Area Mempelai</a>}
         </div>
       </footer>
