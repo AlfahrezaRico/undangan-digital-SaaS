@@ -59,7 +59,7 @@ const Home = () => {
   const [pinError, setPinError] = useState("");
   const [music, setMusic] = useState({ url: null, filename: null });
   const [localUrl, setLocalUrl] = useState(() => {
-    try { return localStorage.getItem("lira-febi-music") || ""; } catch { return ""; }
+    try { return localStorage.getItem("febi-lira-music") || ""; } catch { return ""; }
   });
   const [playing, setPlaying] = useState(false);
   const [lightbox, setLightbox] = useState(null);
@@ -84,7 +84,7 @@ const Home = () => {
   const heroImgY = useTransform(scrollYProgress, [0, 1], [0, 120]);
   const heroCopyY = useTransform(scrollYProgress, [0, 1], [0, -70]);
 
-  const DEFAULT_MUSIC = "/audio/wedding-song.mp3";
+  const DEFAULT_MUSIC = "/audio/wedding-song.mp3?v=3";
   const [audioError, setAudioError] = useState(false);
 
   const activeMusicUrl = useMemo(() => {
@@ -324,12 +324,12 @@ const Home = () => {
         try {
           await axios.post(`${API}/music`, { url: dataUrl, filename: f.name });
           setMusic({ url: dataUrl, filename: f.name });
-          try { localStorage.setItem("lira-febi-music", dataUrl); } catch {}
+          try { localStorage.setItem("febi-lira-music", dataUrl); } catch {}
           setUploadMsg(`Musik "${f.name}" berhasil disimpan ke database!`);
           setTimeout(() => audioRef.current?.play().catch(() => {}), 300);
         } catch (err) {
           setMusic({ url: dataUrl, filename: f.name });
-          try { localStorage.setItem("lira-febi-music", dataUrl); } catch {}
+          try { localStorage.setItem("febi-lira-music", dataUrl); } catch {}
           setUploadMsg(err.response?.data?.detail || `Gagal menyimpan ke server: ${f.name}`);
         }
         setSavingMusic(false);
@@ -346,12 +346,12 @@ const Home = () => {
       try {
         await axios.post(`${API}/music`, { url: localUrl.trim(), filename: "Lagu Pernikahan (Tautan)" });
         setMusic({ url: localUrl.trim(), filename: "Lagu Pernikahan (Tautan)" });
-        try { localStorage.setItem("lira-febi-music", localUrl.trim()); } catch {}
+        try { localStorage.setItem("febi-lira-music", localUrl.trim()); } catch {}
         setUploadMsg("Tautan musik berhasil disimpan!");
         setTimeout(() => audioRef.current?.play().catch(() => {}), 300);
       } catch (err) {
         setMusic({ url: localUrl.trim(), filename: "Lagu Pernikahan (Tautan)" });
-        try { localStorage.setItem("lira-febi-music", localUrl.trim()); } catch {}
+        try { localStorage.setItem("febi-lira-music", localUrl.trim()); } catch {}
         setUploadMsg("Tautan musik tersimpan!");
       }
       setSavingMusic(false);
