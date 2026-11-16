@@ -428,6 +428,7 @@ const Home = () => {
           <a href="#couple" data-testid="nav-couple-link" onClick={e => go(e, "#couple")}>Mempelai</a>
           <a href="#story" data-testid="nav-story-link" onClick={e => go(e, "#story")}>Cerita</a>
           <a href="#event" data-testid="nav-event-link" onClick={e => go(e, "#event")}>Acara</a>
+          <a href="#videos" data-testid="nav-videos-link" onClick={e => go(e, "#videos")}>Video</a>
           {allPhotos.length > 0 && <a href="#gallery" data-testid="nav-gallery-link" onClick={e => go(e, "#gallery")}>Galeri</a>}
         </div>
         <button
@@ -626,6 +627,7 @@ const Home = () => {
           <div className="videos-grid">
             <Reveal><Tilt intensity={6} className="video-card" data-testid="video-card-1"><video data-testid="video-1" src="/videos/momen-1.mp4" poster="/videos/poster-1.jpg" controls preload="metadata" playsInline onPlay={handleVideoPlay} onPause={handleVideoStop} onEnded={handleVideoStop} /><span className="video-label">CUPLIKAN 01</span></Tilt></Reveal>
             <Reveal delay={0.12}><Tilt intensity={6} className="video-card portrait" data-testid="video-card-2"><video data-testid="video-2" src="/videos/momen-2.mp4" poster="/videos/poster-2.jpg" controls preload="metadata" playsInline onPlay={handleVideoPlay} onPause={handleVideoStop} onEnded={handleVideoStop} /><span className="video-label">CUPLIKAN 02</span></Tilt></Reveal>
+            <Reveal delay={0.18}><Tilt intensity={6} className="video-card portrait" data-testid="video-card-3"><video data-testid="video-3" src="/videos/momen-3.mp4" poster="/videos/poster-3.jpg" controls preload="metadata" playsInline onPlay={handleVideoPlay} onPause={handleVideoStop} onEnded={handleVideoStop} /><span className="video-label">CUPLIKAN 03</span></Tilt></Reveal>
           </div>
         </section>
 
